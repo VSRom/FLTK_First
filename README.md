@@ -13,7 +13,6 @@ First project with FLTK and CMake based on Bjarne Stroustrup's book "Programming
 ### Build:
 
 mkdir build
-mkdir build
 cd build
 cmake .. -A x64
 cmake --build . --config Release
