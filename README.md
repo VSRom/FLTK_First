@@ -2,7 +2,7 @@
 
 First project with FLTK and CMake based on Bjarne Stroustrup's book "Programming: Principles and Practice Using C++"
 
-## 🚀 Quick Start (3 commands!)
+## ?? Quick Start (3 commands!)
 
 ### Requirements:
 - CMake 3.20+ (https://cmake.org/download/)
