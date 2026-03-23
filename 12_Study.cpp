@@ -7,84 +7,297 @@
 //=======================================================================================================
 int main()
 {
-	Point tl(100, 100); // левый верхний угол нашего окна
-	Simple_window win(tl, 600, 400, "MyWindow");
-	Axis xa(Axis::x, Point(20, 300), 280, 10, "x axis"); // создаем
-	Axis ya(Axis::y, Point(20, 300), 280, 10, "y axis");
-	ya.set_color(Color::red);
-	ya.label.set_color(Color::dark_green);
+	Point t1(50, 50);
+	Point t2(50, 100);
+	Point t3(50, 150);
+	Point t4(100, 50);
+	Point t5(100, 100);
+	Point t6(100, 150);
+	Point t7(150, 50);
+	Point t8(150, 100);
+	Point t9(150, 150);
+	Simple_window win(t1, 800, 600, "MyWindow");
 
-	xa.set_color(Color::red);
-	xa.label.set_color(Color::dark_green);
+	Rectangle r1(t1, 50, 50);
+	r1.set_color(Color::red);
+	r1.set_fill_color(Color::red);
+	win.attach(r1);
 
-	win.attach(ya);
-	win.attach(xa);
+	Rectangle r2(t2, 50, 50);
+	r2.set_color(Color::white);
+	r2.set_fill_color(Color::white);
+	win.attach(r2);
 
-	Function sine(sin, 0, 100, Point(20, 150), 1000, 50, 50); // график синуса
-	win.attach(sine);
-	sine.set_color(Color::dark_green);
+	Rectangle r3(t3, 50, 50);
+	r3.set_color(Color::red);
+	r3.set_fill_color(Color::red);
+	win.attach(r3);
 
-	Polygon poly;
-	poly.add(Point(400, 192));
-	poly.add(Point(250, 110));
-	poly.add(Point(350, 150));
+	Rectangle r4(t4, 50, 50);
+	r4.set_color(Color::white);
+	r4.set_fill_color(Color::white);
+	win.attach(r4);
 
-	poly.set_color(Color::red);
-	poly.set_style(Line_style::dash);
-	win.attach(poly);
+	Rectangle r5(t5, 50, 50);
+	r5.set_color(Color::red);
+	r5.set_fill_color(Color::red);
+	win.attach(r5);
 
-	Rectangle r(Point(200, 200), 100, 50); // левый верхний угол,
-	// ширина, высота
-	win.attach(r);
+	Rectangle r6(t6, 50, 50);
+	r6.set_color(Color::white);
+	r6.set_fill_color(Color::white);
+	win.attach(r6);
 
-	Closed_polyline poly_rect;
-	poly_rect.add(Point(100, 50));
-	poly_rect.add(Point(200, 50));
-	poly_rect.add(Point(200, 100));
-	poly_rect.add(Point(100, 100));
-	poly_rect.add(Point(50, 75));
-	win.attach(poly_rect);
+	Rectangle r7(t7, 50, 50);
+	r7.set_color(Color::red);
+	r7.set_fill_color(Color::red);
+	win.attach(r7);
 
-	r.set_fill_color(Color::yellow); // цвет внутри прямоугольника
-	poly.set_style(Line_style(Line_style::dash, 4));
-	poly_rect.set_style(Line_style(Line_style::dash, 2));
-	poly_rect.set_fill_color(Color::green);
+	Rectangle r8(t8, 50, 50);
+	r8.set_color(Color::white);
+	r8.set_fill_color(Color::white);
+	win.attach(r8);
 
-	Text t(Point(150, 150), "Hello, graphical world!");
-	win.attach(t);
-	t.set_font(Font::times_bold);
-	t.set_font_size(20);
+	Rectangle r9(t9, 50, 50);
+	r9.set_color(Color::red);
+	r9.set_fill_color(Color::red);
+	win.attach(r9);
 
-	Image ii(Point(100, 50), "image.jpg"); // файл 400×212 пикселей
-	// в формате jpg
-	win.attach(ii);
-	ii.move(100, 200);
-	Circle c(Point(200, 320), 50);
-	Ellipse e(Point(250, 320), 75, 25);
-	e.set_color(Color::dark_red);
-	Mark m(Point(100, 200), 'x');
-	ostringstream oss;
-	oss << "screen size: " << x_max() << "*" << y_max()
-		<< "; window size: " << win.x_max() << "*" << win.y_max();
-	Text sizes(Point(100, 20), oss.str());
-	Image cal(Point(225, 225), "snow_cpp.gif");
-	// формат gif
-	cal.set_mask(Point(40, 40), 200, 150);
-	// в центре
-	win.attach(c);
-	win.attach(m);
-	win.attach(e);
-	win.attach(sizes);
-	win.attach(cal);
-
-	win.set_label("MyWindow #12"); // изменяем метку окна
-	win.wait_for_button(); // изобразить!
+	win.wait_for_button();
 }
 //=======================================================================================================
 /*
 //=======================================================================================================
-	V	2. Добавьте примеры из раздела 12.7 один за другим, сравнивая их друг с другом.
+	7. Нарисуйте двумерный дом анфас, как это делают дети: дверь, два окна и крыша с дымовой трубой.
+Детали можете выбрать сами, можете даже нарисовать дымок из трубы.
 //=======================================================================================================
-	V	3. Выполните программу, внеся небольшие изменения (например, измените цвет, местоположение фигур или количество точек) в каждом из примеров.
+
+//=======================================================================================================
+	V	6. Что произойдет, если вы нарисуете фигуру, которая не помещается в окне?
+Что произойдет, если вы нарисуете окно, которое не помещается на экране?
+Напишите две программы, иллюстрирующие эти эффекты.
+//=======================================================================================================
+	Point tl(-10, -10);
+	Simple_window win(tl, 7500, 9200, "MyWindow");
+
+
+	Rectangle r(tl, 70000, 100000);
+	r.set_color(Color::blue);
+	win.attach(r);
+//=======================================================================================================
+	V	5. Нарисуйте красную рамку шириной один дюйм вокруг прямоугольника,
+высота которого составляет три четверти высоты вашего экрана, а ширина — две трети ширины экрана.
+//=======================================================================================================
+Point tl(50, 50);
+	Point t2(49, 49);
+	Simple_window win(tl, 600, 400, "MyWindow");
+
+	int width = 600 / 1.5;
+	int height = 400 - 100;
+
+	Rectangle r(tl, width, height);
+	r.set_color(Color::blue);
+	win.attach(r);
+
+	Rectangle r2(t2, width + 2, height + 2);
+	r2.set_color(Color::red);
+	win.attach(r2);
+//=======================================================================================================
+	V	4. Нарисуйте доску для игры в крестики-нолики размером 3×3, чередуя белые и красные квадраты.
+//=======================================================================================================
+Можно сделать через Rectangle
+
+	Point t1(50, 50);
+	Point t2(50, 100);
+	Point t3(50, 150);
+	Point t4(100, 50);
+	Point t5(100, 100);
+	Point t6(100, 150);
+	Point t7(150, 50);
+	Point t8(150, 100);
+	Point t9(150, 150);
+	Simple_window win(t1, 800, 600, "MyWindow");
+
+	Rectangle r1(t1, 50, 50);
+	r1.set_color(Color::red);
+	r1.set_fill_color(Color::red);
+	win.attach(r1);
+
+	Rectangle r2(t2, 50, 50);
+	r2.set_color(Color::white);
+	r2.set_fill_color(Color::white);
+	win.attach(r2);
+
+	Rectangle r3(t3, 50, 50);
+	r3.set_color(Color::red);
+	r3.set_fill_color(Color::red);
+	win.attach(r3);
+
+	Rectangle r4(t4, 50, 50);
+	r4.set_color(Color::white);
+	r4.set_fill_color(Color::white);
+	win.attach(r4);
+
+	Rectangle r5(t5, 50, 50);
+	r5.set_color(Color::red);
+	r5.set_fill_color(Color::red);
+	win.attach(r5);
+
+	Rectangle r6(t6, 50, 50);
+	r6.set_color(Color::white);
+	r6.set_fill_color(Color::white);
+	win.attach(r6);
+
+	Rectangle r7(t7, 50, 50);
+	r7.set_color(Color::red);
+	r7.set_fill_color(Color::red);
+	win.attach(r7);
+
+	Rectangle r8(t8, 50, 50);
+	r8.set_color(Color::white);
+	r8.set_fill_color(Color::white);
+	win.attach(r8);
+
+	Rectangle r9(t9, 50, 50);
+	r9.set_color(Color::red);
+	r9.set_fill_color(Color::red);
+	win.attach(r9);
+	
+	ИЛИ
+
+Polygon poly_1;
+	poly_1.add(Point(150, 200));
+	poly_1.add(Point(150, 250));
+	poly_1.add(Point(200, 250));
+	poly_1.add(Point(200, 200));
+	poly_1.set_color(Color::red);
+	poly_1.set_fill_color(Color::red);
+	win.attach(poly_1);
+
+	Polygon poly_2;
+	poly_2.add(Point(150, 250));
+	poly_2.add(Point(150, 300));
+	poly_2.add(Point(200, 300));
+	poly_2.add(Point(200, 250));
+	poly_2.set_color(Color::white);
+	poly_2.set_fill_color(Color::white);
+	win.attach(poly_2);
+
+	Polygon poly_3;
+	poly_3.add(Point(150, 300));
+	poly_3.add(Point(150, 350));
+	poly_3.add(Point(200, 350));
+	poly_3.add(Point(200, 300));
+	poly_3.set_color(Color::red);
+	poly_3.set_fill_color(Color::red);
+	win.attach(poly_3);
+
+	Polygon poly_4;
+	poly_4.add(Point(200, 200));
+	poly_4.add(Point(200, 250));
+	poly_4.add(Point(250, 250));
+	poly_4.add(Point(250, 200));
+	poly_4.set_color(Color::white);
+	poly_4.set_fill_color(Color::white);
+	win.attach(poly_4);
+
+	Polygon poly_5;
+	poly_5.add(Point(200, 250));
+	poly_5.add(Point(200, 300));
+	poly_5.add(Point(250, 300));
+	poly_5.add(Point(250, 250));
+	poly_5.set_color(Color::red);
+	poly_5.set_fill_color(Color::red);
+	win.attach(poly_5);
+
+	Polygon poly_6;
+	poly_6.add(Point(200, 300));
+	poly_6.add(Point(200, 350));
+	poly_6.add(Point(250, 350));
+	poly_6.add(Point(250, 300));
+	poly_6.set_color(Color::white);
+	poly_6.set_fill_color(Color::white);
+	win.attach(poly_6);
+
+	Polygon poly_7;
+	poly_7.add(Point(250, 200));
+	poly_7.add(Point(250, 250));
+	poly_7.add(Point(300, 250));
+	poly_7.add(Point(300, 200));
+	poly_7.set_color(Color::red);
+	poly_7.set_fill_color(Color::red);
+	win.attach(poly_7);
+
+	Polygon poly_8;
+	poly_8.add(Point(250, 250));
+	poly_8.add(Point(250, 300));
+	poly_8.add(Point(300, 300));
+	poly_8.add(Point(300, 250));
+	poly_8.set_color(Color::white);
+	poly_8.set_fill_color(Color::white);
+	win.attach(poly_8);
+
+	Polygon poly_9;
+	poly_9.add(Point(250, 300));
+	poly_9.add(Point(250, 350));
+	poly_9.add(Point(300, 350));
+	poly_9.add(Point(300, 300));
+	poly_9.set_color(Color::red);
+	poly_9.set_fill_color(Color::red);
+	win.attach(poly_9);
+//=======================================================================================================
+	V доп	2. Добавьте примеры из раздела 12.7 один за другим, сравнивая их друг с другом.
+//=======================================================================================================
+	V доп	3. Выполните программу, внеся небольшие изменения (например, измените цвет, местоположение фигур или количество точек) в каждом из примеров.
+//=======================================================================================================
+//=======================================================================================================
+	V	1. Нарисуйте прямоугольник как объект класса Rectangle и как объект класса Polygon.
+Сделайте линии объекта класса Polygon красными, а линии объекта класса Rectangle синими.
+//=======================================================================================================
+Rectangle r(tl, 300, 100);
+	r.set_color(Color::dark_blue);
+	win.attach(r);
+	Polygon p;
+	p.add(Point(200, 200));
+	p.add(Point(300, 200));
+	p.add(Point(300, 250));
+	p.add(Point(200, 250));
+	p.set_color(Color::dark_red);
+	win.attach(p);
+//=======================================================================================================
+	V	2. Нарисуйте объект класса Rectangle с размерами 100×300 и поместите в него слово “Привет!”.
+//=======================================================================================================
+	Polygon p;
+	p.add(Point(200, 200));
+	p.add(Point(300, 200));
+	p.add(Point(300, 250));
+	p.add(Point(200, 250));
+	p.set_color(Color::dark_red);
+	win.attach(p);
+
+	Text v(Point(220, 220), "HELLO");
+	v.set_color(Color::dark_green);
+	v.set_font_size(15);
+	win.attach(v);
+//=======================================================================================================
+	V	3. Нарисуйте ваши инициалы высотой 150 пикселей. Используйте толстую линию. Нарисуйте каждый инициал другим цветом.
+//=======================================================================================================
+Text v(Point(120, 120), "V");
+	v.set_style(Line_style(Line_style::solid, 20));
+	v.set_color(Color::dark_green);
+	v.set_font_size(150);
+	win.attach(v);
+
+	Text s(Point(240, 120), "S");
+	s.set_style(Line_style(Line_style::solid, 20));
+	s.set_color(Color::dark_blue);
+	s.set_font_size(150);
+	win.attach(s);
+
+	Text r(Point(360, 120), "R");
+	r.set_style(Line_style(Line_style::solid, 20));
+	r.set_color(Color::dark_red);
+	r.set_font_size(150);
+	win.attach(r);
 //=======================================================================================================
 */
