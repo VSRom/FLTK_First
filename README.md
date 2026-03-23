@@ -16,7 +16,5 @@ mkdir build
 cd build
 cmake .. -A x64
 cmake --build . --config Release
-cd Release
-FLTK_First.exe
 
 ### FLTK downloads automatically!
