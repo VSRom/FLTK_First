@@ -3,11 +3,172 @@
 #include "PPP/Graph.h"
 #include "PPP/GUI.h"
 #include "PPP/Window.h"
-
+//=======================================================================================================
+//		void Lines::draw_lines() const
+//		{
+//			if (color().visibility())
+//				for (int i = 1; i < number_of_points(); i += 2)
+//					fl_line(point(i-1).x, point(i-1).y,
+//						point(i).x, point(i).y);
+//		}
+//=======================================================================================================
+//		void Lines::add(Point p1, Point p2)
+//		{
+//			Shape::add(p1);
+//			Shape::add(p2);
+//		}
+//=======================================================================================================
+//		template<class T> class Vector_ref {
+//		public:
+//			// ...
+//			void push_back(T &);
+//			void push_back(T *);
+//			T &operator[](int i);
+//			const T &operator[](int i) const;
+//			int size() const;
+//		};
 //=======================================================================================================
 int main()
 {
-	Point t1(100, 100);
+	Simple_window win3(Point(100, 100), 1000, 800, "Two lines");
+
+//											// рисуем две линии
+//											int x_size = win3.x_max(); // определяем размер нашего окна
+//											int y_size = win3.y_max();
+//											int x_grid = 80;
+//											int y_grid = 40;
+//											
+//											Lines grid;
+//											for (int x = x_grid; x < x_size; x += x_grid)
+//												grid.add(Point(x, 0), Point(x, y_size)); // вертикальная линия
+//											
+//											for (int y = y_grid; y < y_size; y += y_grid)
+//												grid.add(Point(0, y), Point(x_size, y)); // горизонтальная линия
+//											
+//											grid.set_style(Line_style(Line_style::dash, 2));
+//											grid.set_color(Color(99));
+//											
+//											Closed_polyline cpl;
+//											cpl.add(Point(100, 100));
+//											cpl.add(Point(150, 200));
+//											cpl.add(Point(250, 250));
+//											cpl.add(Point(300, 200));
+//											cpl.add(Point(100, 250));
+//											cpl.set_style(Line_style(Line_style::solid, 4));
+//											cpl.set_color(Color::red);
+//											win3.attach(cpl);
+//											
+//											//	Polygon poly;
+//											//	poly.add(Point(100, 100));
+//											//	poly.add(Point(150, 200));
+//											//	poly.add(Point(250, 250));
+//											//	poly.add(Point(300, 200));
+//											//	poly.set_style(Line_style(Line_style::solid, 4));
+//											//	poly.set_color(Color::red);
+//											//	win3.attach(poly);
+//											
+//											Text t(Point(200, 200), "A closed polyline that isn't a polygon");
+//											t.set_color(Color::blue);
+//											win3.attach(t);
+//											
+//											win3.attach(grid);
+
+//								Rectangle rect00(Point(150, 100), 200, 100);
+//								Rectangle rect11(Point(50, 50), Point(250, 150));
+//								Rectangle rect12(Point(50, 150), Point(250, 250));
+//								Rectangle rect21(Point(250, 50), 200, 100);
+//								Rectangle rect22(Point(250, 150), 200, 100);
+//									// 447 page
+//								rect00.set_fill_color(Color::yellow);
+//								rect11.set_fill_color(Color::blue);
+//								rect11.move(400, 0); // вправо от rect21
+//								rect11.set_fill_color(Color::white);
+//								
+//								win3.set_label("rectangles 2");
+//							
+//								rect12.set_fill_color(Color::red);
+//								rect21.set_fill_color(Color::green);
+//							
+//								win3.attach(rect00);
+//								win3.attach(rect11);
+//								win3.attach(rect12);
+//								win3.attach(rect21);
+//							
+//								win3.put_on_top(rect00);
+//							
+//								rect00.set_color(Color::invisible);
+//								rect11.set_color(Color::invisible);
+//								rect12.set_color(Color::invisible);
+//								rect21.set_color(Color::invisible);
+//								rect22.set_color(Color::invisible);
+//							
+//								Vector_ref<Rectangle> rect;
+//								Rectangle x(Point(100, 200), Point(200, 300));
+//								rect.push_back(x);
+//								rect.push_back(new Rectangle(Point(50, 60), Point(80, 90)));
+//							
+//								for (int i = 0; i < rect.size(); ++i)
+//									rect[i].move(10, 10);
+//							
+//								win3.attach(x);
+
+//					Vector_ref<Rectangle> vr;
+//				
+//					for (int i = 0; i < 16; ++i)
+//						for (int j = 0; j < 16; ++j)
+//						{
+//							vr.push_back(new Rectangle(Point(i * 40, j * 40), 40, 40));
+//				
+//							vr[vr.size()-1].set_fill_color(Color(i * 16 + j));
+//				
+//							win3.attach(vr[vr.size()-1]);
+//						}
+
+//			Circle c1(Point(100, 200), 50);
+//			Circle c2(Point(150, 200), 100);
+//			Circle c3(Point(200, 200), 150);
+//			win3.attach(c1);
+//			win3.attach(c2);
+//			win3.attach(c3);
+
+//										Ellipse e1(Point(200, 200), 50, 50);
+//										Ellipse e2(Point(200, 200), 100, 50);
+//										Ellipse e3(Point(200, 200), 100, 150);
+//										win3.attach(e1);
+//										win3.attach(e2);
+//										win3.attach(e3);
+//		
+//										Ellipse e4(Point(600, 200), 50, 50);
+//										Ellipse e5(Point(600, 200), 100, 50);
+//										Ellipse e6(Point(600, 200), 100, 150);
+//										win3.attach(e4);
+//										win3.attach(e5);
+//										win3.attach(e6);
+
+//			Marked_polyline mpl("1234");
+//			mpl.add(Point(100, 100));
+//			mpl.add(Point(150, 200));
+//			mpl.add(Point(250, 250));
+//			mpl.add(Point(300, 200));
+//			win3.attach(mpl);
+
+
+Marks pp("x");
+pp.add(Point(100, 100));
+pp.add(Point(150, 200));
+pp.add(Point(250, 250));
+pp.add(Point(300, 200));
+win3.attach(pp);
+
+	win3.wait_for_button();
+}
+//=======================================================================================================
+/*
+//=======================================================================================================
+	8. Нарисуйте пять олимпийских колец. Если помните их цвета, то раскрасьте их.
+use fl_arc()
+//=======================================================================================================
+Point t1(100, 100);
 	Point t2(200, 200);
 	Point t3(325, 200);
 	Point t4(450, 200);
@@ -42,13 +203,6 @@ int main()
 	win.attach(c5);
 
 	win.wait_for_button();
-}
-//=======================================================================================================
-/*
-//=======================================================================================================
-	8. Нарисуйте пять олимпийских колец. Если помните их цвета, то раскрасьте их.
-//=======================================================================================================
-
 //=======================================================================================================
 	V	7. Нарисуйте двумерный дом анфас, как это делают дети: дверь, два окна и крыша с дымовой трубой.
 Детали можете выбрать сами, можете даже нарисовать дымок из трубы.
