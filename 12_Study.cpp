@@ -4,34 +4,74 @@
 #include "PPP/GUI.h"
 #include "PPP/Window.h"
 //=======================================================================================================
-//		void Lines::draw_lines() const
-//		{
-//			if (color().visibility())
-//				for (int i = 1; i < number_of_points(); i += 2)
-//					fl_line(point(i-1).x, point(i-1).y,
-//						point(i).x, point(i).y);
-//		}
-//=======================================================================================================
-//		void Lines::add(Point p1, Point p2)
-//		{
-//			Shape::add(p1);
-//			Shape::add(p2);
-//		}
-//=======================================================================================================
-//		template<class T> class Vector_ref {
-//		public:
-//			// ...
-//			void push_back(T &);
-//			void push_back(T *);
-//			T &operator[](int i);
-//			const T &operator[](int i) const;
-//			int size() const;
-//		};
-//=======================================================================================================
 int main()
 {
-	Simple_window win3(Point(100, 100), 1000, 800, "Two lines");
+	Simple_window win3(Point(100, 100), 800, 800, "Two lines");
 
+	//				Task:2
+//										int x_size = win3.x_max();
+//										int y_size = win3.y_max();
+//										int xy_grid = 100;
+//									
+//										Lines grid;
+//										for (int x = xy_grid; x < x_size; x += xy_grid)
+//											grid.add(Point(x, 0), Point(x, y_size));
+//										
+//										for (int y = xy_grid; y < y_size; y += xy_grid)
+//											grid.add(Point(0, y), Point(x_size, y));
+//									
+//										grid.set_style(Line_style(Line_style::solid, 2));
+//										grid.set_color(Color(99));
+//									
+//										win3.attach(grid);
+	//				Task:3
+					int x_rect = 0;
+					int move_rect = 50;
+					int x_size = win3.x_max();
+					int y_size = win3.y_max();
+					Vector_ref<Rectangle> rects;
+					
+					for (int x = x_rect; x < x_size; x += move_rect)
+					{
+						Rectangle rect(Point(x, x), 50, 50);
+						rects.push_back(rect);
+					}
+
+					for (int i = 0; i < rects.size(); i++)
+					{
+						//	Rectangle rect(Point(0, 0), 50,50 );
+						rects[i].set_style(Line_style(Line_style::solid, 2));
+						rects[i].set_color(Color(99));
+						rects[i].set_fill_color(Color::red);
+						win3.attach(rects[i]);
+					}
+	////////////////////////////////////////////////////////////////////////////////////////////////
+//												Vector_ref<Rectangle> rect;
+//												Rectangle x(Point(100, 200), Point(200, 300));
+//												rect.push_back(x);
+//												rect.push_back(new Rectangle(Point(50, 60), Point(80, 90)));
+//											
+//												for (int i = 0; i < rect.size(); ++i)
+//												{
+//													rect[i].move(10, 10);
+//													win3.attach(rect[i]);
+//												}
+//					
+//									Vector_ref<Rectangle> vr;
+//								
+//									for (int i = 0; i < 16; ++i)
+//									{
+//										for (int j = 0; j < 16; ++j)
+//										{
+//											vr.push_back(new Rectangle(Point(i * 40, j * 40), 40, 40));
+//					
+//											vr[vr.size() - 1].set_fill_color(Color(i * 16 + j));
+//										}
+//									}
+
+	win3.wait_for_button();
+}
+//=======================================================================================================/*
 //											// рисуем две линии
 //											int x_size = win3.x_max(); // определяем размер нашего окна
 //											int y_size = win3.y_max();
@@ -153,15 +193,18 @@ int main()
 //			win3.attach(mpl);
 
 
-Marks pp("x");
-pp.add(Point(100, 100));
-pp.add(Point(150, 200));
-pp.add(Point(250, 250));
-pp.add(Point(300, 200));
-win3.attach(pp);
+//	Marks pp("x");
+//	pp.add(Point(100, 100));
+//	pp.add(Point(150, 200));
+//	pp.add(Point(250, 250));
+//	pp.add(Point(300, 200));
+//	win3.attach(pp);
 
-	win3.wait_for_button();
-}
+//		Image rita(Point(0, 0), "rita.jpg");
+//		Image path(Point(0, 0), "rita_path.gif");
+//		path.set_mask(Point(50, 250), 600, 400); // выбираем желательную область
+//		win3.attach(path);
+//		win3.attach(rita);
 //=======================================================================================================
 /*
 //=======================================================================================================
