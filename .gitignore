@@ -41,6 +41,7 @@ compile_commands.json
 *.tmp
 *.bak
 *.swp
+*.jpg
 *~
 
 # FLTK build artifacts (if bundled)
