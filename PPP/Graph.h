@@ -281,7 +281,8 @@ struct Axis : Shape {
 
 struct Circle : Shape {
 	Circle(Point p, int rr)	// center and radius
-	:r{ rr } {
+	:r{ rr }
+	{
 		add(Point{ p.x - r, p.y - r });
 	}
 
@@ -295,10 +296,11 @@ private:
 	int r;
 };
 
-
-struct Ellipse : Shape {
+struct Ellipse : Shape
+{
 	Ellipse(Point p, int ww, int hh)	// center, min, and max distance from center
-	:w{ ww }, h{ hh } {
+	:w{ ww }, h{ hh }
+	{
 		add(Point{ p.x - ww, p.y - hh });
 	}
 
@@ -316,6 +318,32 @@ private:
 	int w;
 	int h;
 };
+
+struct Arc : Shape
+{
+	Arc(Point p, int ww, int hh, int s, int e)	// center, min, and max distance from center
+		:w{ ww }, h{ hh }, start(s), end(e)
+	{
+		add(Point{ p.x - ww, p.y - hh });
+	}
+
+	void draw_lines() const;
+
+	Point center() const { return{ point(0).x + w, point(0).y + h }; }
+	Point focus1() const { return{ center().x + int(sqrt(double(w * w - h * h))), center().y }; }
+	Point focus2() const { return{ center().x - int(sqrt(double(w * w - h * h))), center().y }; }
+
+	void set_major(int ww) { w = ww; }
+	int major() const { return w; }
+	void set_minor(int hh) { h = hh; }
+	int minor() const { return h; }
+private:
+	int w;
+	int h;
+	int start;
+	int end;
+};
+
 /*
 struct Mark : Text {
 	static const int dw = 4;

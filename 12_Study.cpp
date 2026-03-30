@@ -6,8 +6,28 @@
 //=======================================================================================================
 int main()
 {
-	Simple_window win3(Point(100, 100), 800, 800, "Two lines");
+	Simple_window win9I(Point(100, 100), 800, 800, "Hello");
 
+//=======================================================================================================
+	/*
+2. Нарисуйте окно с закругленными углами. Определите класс Box, состоящий из четырех линий и четырех дуг.
+
+
+//=======================================================================================================
+	
+1. Определите класс Arc, рисующий часть эллипса.Подсказка: fl_arc().
+
+	Arc arc(Point(200, 200), 100, 150, 30, 290);
+	arc.set_style(Line_style(Line_style::solid, 2));
+	arc.set_color(Color::dark_green);
+	win9I.attach(arc);
+	*/
+//=======================================================================================================
+	win9I.wait_for_button();
+}
+//=======================================================================================================
+/*
+//=======================================================================================================
 	//				Task:2
 //										int x_size = win3.x_max();
 //										int y_size = win3.y_max();
@@ -25,26 +45,24 @@ int main()
 //									
 //										win3.attach(grid);
 	//				Task:3
-					int x_rect = 0;
-					int move_rect = 50;
-					int x_size = win3.x_max();
-					int y_size = win3.y_max();
-					Vector_ref<Rectangle> rects;
-					
-					for (int x = x_rect; x < x_size; x += move_rect)
-					{
-						Rectangle rect(Point(x, x), 50, 50);
-						rects.push_back(rect);
-					}
-
-					for (int i = 0; i < rects.size(); i++)
-					{
-						//	Rectangle rect(Point(0, 0), 50,50 );
-						rects[i].set_style(Line_style(Line_style::solid, 2));
-						rects[i].set_color(Color(99));
-						rects[i].set_fill_color(Color::red);
-						win3.attach(rects[i]);
-					}
+//					Simple_window win3(Point(100, 100), 800, 800, "Two lines");
+//					int x_rect = 0;
+//					int move_rect = 50;
+//					int x_size = win3.x_max();
+//					int y_size = win3.y_max();
+//					win3.color(Color::black);
+//				
+//					for (int x = x_rect; x < x_size && x < y_size; x += move_rect)
+//					{
+//						Rectangle rect(Point(x, x), 50, 50);
+//						rect.set_style(Line_style(Line_style::solid, 2));
+//						rect.set_color(Color(99));
+//						rect.set_fill_color(Color::red);
+//						win3.attach(rect);
+//					}
+//				
+//					win3.wait_for_button();
+//				}
 	////////////////////////////////////////////////////////////////////////////////////////////////
 //												Vector_ref<Rectangle> rect;
 //												Rectangle x(Point(100, 200), Point(200, 300));
@@ -68,9 +86,6 @@ int main()
 //											vr[vr.size() - 1].set_fill_color(Color(i * 16 + j));
 //										}
 //									}
-
-	win3.wait_for_button();
-}
 //=======================================================================================================/*
 //											// рисуем две линии
 //											int x_size = win3.x_max(); // определяем размер нашего окна

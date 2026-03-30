@@ -235,13 +235,15 @@ void Axis::move(int dx, int dy)
 
 void Circle::draw_lines() const
 {
-	if (fill_color().visibility()) {	// fill
+	if (fill_color().visibility())
+	{	// fill
 		fl_color(fill_color().as_int());
 		fl_pie(point(0).x,point(0).y,r+r-1,r+r-1,0,360);
 		fl_color(color().as_int());	// reset color
 	}
 
-	if (color().visibility()) {
+	if (color().visibility())
+	{
 		fl_color(color().as_int());
 		fl_arc(point(0).x,point(0).y,r+r,r+r,0,360);
 	}
@@ -250,15 +252,26 @@ void Circle::draw_lines() const
 
 void Ellipse::draw_lines() const
 {
-	if (fill_color().visibility()) {	// fill
+	if (fill_color().visibility())
+	{	// fill
 		fl_color(fill_color().as_int());
 		fl_pie(point(0).x,point(0).y,w+w-1,h+h-1,0,360);
 		fl_color(color().as_int());	// reset color
 	}
 
-	if (color().visibility()) {
+	if (color().visibility())
+	{
 		fl_color(color().as_int());
 		fl_arc(point(0).x,point(0).y,w+w,h+h,0,360);
+	}
+}
+
+void Arc::draw_lines() const
+{
+	if (color().visibility())
+	{
+		fl_color(color().as_int());
+		fl_arc(point(0).x, point(0).y, w + w, h + h, start, end);
 	}
 }
 
