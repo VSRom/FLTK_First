@@ -169,8 +169,21 @@ void Rectangle::draw_lines() const
 		fl_rect(point(0).x,point(0).y,w,h);
 	}
 }
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+void Box::draw_lines() const
+{
+	if (fill_color().visibility()) {	// fill
+		fl_color(fill_color().as_int());
+		fl_rounded_rectf(point(0).x, point(0).y, w, h, a);
+		fl_color(color().as_int());	// reset color
+	}
 
-
+	if (color().visibility()) {	// edge on top of fill
+		fl_color(color().as_int());
+		fl_rounded_rect(point(0).x, point(0).y, w, h, a);
+	}
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 Axis::Axis(Orientation d, Point xy, int length, int n, string lab)
 	:label(Point(0,0),lab)
 {
@@ -265,7 +278,7 @@ void Ellipse::draw_lines() const
 		fl_arc(point(0).x,point(0).y,w+w,h+h,0,360);
 	}
 }
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void Arc::draw_lines() const
 {
 	if (color().visibility())
@@ -274,7 +287,7 @@ void Arc::draw_lines() const
 		fl_arc(point(0).x, point(0).y, w + w, h + h, start, end);
 	}
 }
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void draw_mark(Point xy, char c)
 {
 	static const int dx = 4;

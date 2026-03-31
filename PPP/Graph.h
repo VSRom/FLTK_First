@@ -187,7 +187,8 @@ struct Line : Shape {
 	Line(Point p1, Point p2) { add(p1); add(p2); }
 };
 
-struct Rectangle : Shape {
+struct Rectangle : Shape
+{
 
 	Rectangle(Point xy, int ww, int hh) :w{ ww }, h{ hh }
 	{
@@ -211,9 +212,101 @@ private:
 	int w;			// width
 //	Color fcolor;	// fill color; 0 means "no fill"
 };
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+struct Box : Shape
+{
+	Box(Lines xy1, Lines xy2, Lines xy3, Lines xy4, Arc a1, Arc a2, Arc a3, Arc a4)
+	{ }
 
+
+
+			/*
+			*/
+
+//		Box(Point xy, int ww, int hh, double aa)
+//			:w{ ww }, h{ hh }, a{ aa }
+//		{
+//			if (h <= 0 || w <= 0) error("Bad box: non-positive side");
+//			add(xy);
+//		
+//			if (a < 0 || a > 90) error("Bad angle!");
+//		}
+//		Box(Point x, Point y, double aa)
+//			:w{ y.x - x.x }, h{ y.y - x.y }, a { aa }
+//		{
+//			if (h <= 0 || w <= 0) error("Bad box: first point is not top left");
+//			add(x);
+//		
+//			if (a < 0 || a > 90) error("Bad angle!");
+//		}
+//		
+//		void draw_lines() const;
+//		
+//		int height() const
+//		{
+//			return h;
+//		}
+//		
+//		int width() const
+//		{
+//			return w;
+//		}
+//		
+//		double angle() const
+//		{
+//			return a;
+//		}
+//		
+//		private:
+//		int h;			// height
+//		int w;			// width
+//		double a;		// angle
+};
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+struct Lines : Shape
+{	// indepentdent lines
+	Lines()
+	{}
+	Lines(initializer_list<Point> lst) : Shape{ lst }
+	{
+		if (lst.size() % 2) error("odd number of points for Lines");
+
+	}
+	void draw_lines() const;
+
+	void add(Point p1, Point p2)
+	{
+		Shape::add(p1);
+		Shape::add(p2);
+	}
+};
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+struct Arc : Shape
+{
+	Arc(Point p, int ww, int hh, int s, int e)	// center, min, and max distance from center
+		:w{ ww }, h{ hh }, start(s), end(e)
+	{
+		add(Point{ p.x - ww, p.y - hh });
+	}
+
+	void draw_lines() const;
+
+	Point center() const { return{ point(0).x + w, point(0).y + h }; }
+	Point focus1() const { return{ center().x + int(sqrt(double(w * w - h * h))), center().y }; }
+	Point focus2() const { return{ center().x - int(sqrt(double(w * w - h * h))), center().y }; }
+
+	void set_major(int ww) { w = ww; }
+	int major() const { return w; }
+	void set_minor(int hh) { h = hh; }
+	int minor() const { return h; }
+private:
+	int w;
+	int h;
+	int start;
+	int end;
+};
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 bool intersect(Point p1, Point p2, Point p3, Point p4);
-
 
 struct Open_polyline : Shape {	// open sequence of lines
 	using Shape::Shape;
@@ -233,13 +326,6 @@ struct Polygon : Closed_polyline {	// closed sequence of non-intersecting lines
 	using Closed_polyline::Closed_polyline;
 	void add(Point p);
 	void draw_lines() const;
-};
-
-struct Lines : Shape {	// indepentdent lines
-	Lines() {}
-	Lines(initializer_list<Point> lst) : Shape{lst} { if (lst.size() % 2) error("odd number of points for Lines"); }
-	void draw_lines() const;
-	void add(Point p1, Point p2) { Shape::add(p1); Shape::add(p2); }
 };
 
 struct Text : Shape {
@@ -317,31 +403,6 @@ struct Ellipse : Shape
 private:
 	int w;
 	int h;
-};
-
-struct Arc : Shape
-{
-	Arc(Point p, int ww, int hh, int s, int e)	// center, min, and max distance from center
-		:w{ ww }, h{ hh }, start(s), end(e)
-	{
-		add(Point{ p.x - ww, p.y - hh });
-	}
-
-	void draw_lines() const;
-
-	Point center() const { return{ point(0).x + w, point(0).y + h }; }
-	Point focus1() const { return{ center().x + int(sqrt(double(w * w - h * h))), center().y }; }
-	Point focus2() const { return{ center().x - int(sqrt(double(w * w - h * h))), center().y }; }
-
-	void set_major(int ww) { w = ww; }
-	int major() const { return w; }
-	void set_minor(int hh) { h = hh; }
-	int minor() const { return h; }
-private:
-	int w;
-	int h;
-	int start;
-	int end;
 };
 
 /*
