@@ -170,10 +170,41 @@ void Rectangle::draw_lines() const
 	}
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-void Box::draw_lines()
+void Box::draw_lines() const
 {
-	l1.draw_lines();
+	l1.draw();
+	l2.draw();
+	l3.draw();
+	l4.draw();
+	arc1->draw();
+	arc2->draw();
+	arc3->draw();
+	arc4->draw();
+}
 
+void Box::set_color(Color c)
+{
+	l1.set_color(c);
+	l2.set_color(c);
+	l3.set_color(c);
+	l4.set_color(c);
+
+	arc1->set_color(c);
+	arc2->set_color(c);
+	arc3->set_color(c);
+	arc4->set_color(c);
+}
+void Box::set_style(Line_style ist)
+{
+	l1.set_style(ist);
+	l2.set_style(ist);
+	l3.set_style(ist);
+	l4.set_style(ist);
+
+	arc1->set_style(ist);
+	arc2->set_style(ist);
+	arc3->set_style(ist);
+	arc4->set_style(ist);
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 Axis::Axis(Orientation d, Point xy, int length, int n, string lab)

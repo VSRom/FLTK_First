@@ -221,54 +221,22 @@ struct Arc;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 struct Box : Shape
 {
-	Box(Line &l1, Line &xy2, Line &xy3, Line &xy4, Arc &a1, Arc &a2, Arc &a3, Arc &a4)
-		: line1{ l1 }, l2{ &xy2 }, l3{ &xy3 }, l4{ &xy4 }, arc1{ &a1 }, arc2{ &a2 }, arc3{ &a3 }, arc4{ &a4 }
-	{ }
+	//	Box(Line &xy1, Line &xy2, Line &xy3, Line &xy4, Arc &a1, Arc &a2, Arc &a3, Arc &a4)
+	//		: l1{ &xy1 }, l2{ &xy2 }, l3{ &xy3 }, l4{ &xy4 }, arc1{ &a1 }, arc2{ &a2 }, arc3{ &a3 }, arc4{ &a4 }
+	//	{ }
+
+	Box(Point x_1, Point y_1, Point x_2, Point y_2, Point x_3, Point y_3, Point x_4, Point y_4, Arc &a1, Arc &a2, Arc &a3, Arc &a4)
+		: l1{ x_1, y_1 }, l2{ x_2, y_2 }, l3{ x_3, y_3 }, l4{ x_4, y_4 }, arc1{ &a1 }, arc2{ &a2 }, arc3{ &a3 }, arc4{ &a4 }
+	{
+	}
 
 	void draw_lines() const;
+	void set_color(Color c);
+	void set_style(Line_style ist);
 
 private:
-	Line line1 = *l1;
-	, *l2, *l3, *l4;
+	Line l1, l2, l3, l4;
 	Arc *arc1, *arc2, *arc3, *arc4;
-//		Box(Point xy, int ww, int hh, double aa)
-//			:w{ ww }, h{ hh }, a{ aa }
-//		{
-//			if (h <= 0 || w <= 0) error("Bad box: non-positive side");
-//			add(xy);
-//		
-//			if (a < 0 || a > 90) error("Bad angle!");
-//		}
-//		Box(Point x, Point y, double aa)
-//			:w{ y.x - x.x }, h{ y.y - x.y }, a { aa }
-//		{
-//			if (h <= 0 || w <= 0) error("Bad box: first point is not top left");
-//			add(x);
-//		
-//			if (a < 0 || a > 90) error("Bad angle!");
-//		}
-//		
-//		void draw_lines() const;
-//		
-//		int height() const
-//		{
-//			return h;
-//		}
-//		
-//		int width() const
-//		{
-//			return w;
-//		}
-//		
-//		double angle() const
-//		{
-//			return a;
-//		}
-//		
-//		private:
-//		int h;			// height
-//		int w;			// width
-//		double a;		// angle
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 struct Lines : Shape
