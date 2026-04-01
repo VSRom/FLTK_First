@@ -170,18 +170,10 @@ void Rectangle::draw_lines() const
 	}
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-void Box::draw_lines() const
+void Box::draw_lines()
 {
-	if (fill_color().visibility()) {	// fill
-		fl_color(fill_color().as_int());
-		fl_rounded_rectf(point(0).x, point(0).y, w, h, a);
-		fl_color(color().as_int());	// reset color
-	}
+	l1.draw_lines();
 
-	if (color().visibility()) {	// edge on top of fill
-		fl_color(color().as_int());
-		fl_rounded_rect(point(0).x, point(0).y, w, h, a);
-	}
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 Axis::Axis(Orientation d, Point xy, int length, int n, string lab)

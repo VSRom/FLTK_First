@@ -183,8 +183,13 @@ protected:
 	Color fcolor;
 };
 
-struct Line : Shape {
-	Line(Point p1, Point p2) { add(p1); add(p2); }
+struct Line : Shape
+{
+	Line(Point p1, Point p2)
+	{
+		add(p1);
+		add(p2);
+	}
 };
 
 struct Rectangle : Shape
@@ -212,17 +217,20 @@ private:
 	int w;			// width
 //	Color fcolor;	// fill color; 0 means "no fill"
 };
+struct Arc;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 struct Box : Shape
 {
-	Box(Lines xy1, Lines xy2, Lines xy3, Lines xy4, Arc a1, Arc a2, Arc a3, Arc a4)
+	Box(Line &l1, Line &xy2, Line &xy3, Line &xy4, Arc &a1, Arc &a2, Arc &a3, Arc &a4)
+		: line1{ l1 }, l2{ &xy2 }, l3{ &xy3 }, l4{ &xy4 }, arc1{ &a1 }, arc2{ &a2 }, arc3{ &a3 }, arc4{ &a4 }
 	{ }
 
+	void draw_lines() const;
 
-
-			/*
-			*/
-
+private:
+	Line line1 = *l1;
+	, *l2, *l3, *l4;
+	Arc *arc1, *arc2, *arc3, *arc4;
 //		Box(Point xy, int ww, int hh, double aa)
 //			:w{ ww }, h{ hh }, a{ aa }
 //		{
@@ -288,6 +296,9 @@ struct Arc : Shape
 	{
 		add(Point{ p.x - ww, p.y - hh });
 	}
+
+	Arc()
+	{ }
 
 	void draw_lines() const;
 

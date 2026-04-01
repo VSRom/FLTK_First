@@ -7,8 +7,26 @@
 int main()
 {
 	Simple_window win9I(Point(100, 100), 800, 800, "Hello");
+	Point tl1(150, 200);
+	Point tl2(200, 200);
+	Point tl3(350, 200);
+	Point tl4(400, 200);
+	Point tl5(150, 250);
+	Point tl6(200, 250);
+	Point tl7(350, 250);
+	Point tl8(400, 250);
 
-	Box box(Lines(100, 100), 
+	Line l1(tl1, tl2);
+	Line l2(tl3, tl4);
+	Line l3(tl5, tl6);
+	Line l4(tl7, tl8);
+
+	Arc arc1(Point(200, 200), 100, 150, 30, 70);
+	Arc arc2(Point(150, 200), 100, 150, 30, 70);
+	Arc arc3(Point(400, 200), 100, 150, 30, 70);
+	Arc arc4(Point(450, 200), 100, 150, 30, 70);
+	Box box(l1, l2, l3, l4, arc1, arc2, arc3, arc4);
+	win9I.attach(box);
 
 
 //=======================================================================================================
