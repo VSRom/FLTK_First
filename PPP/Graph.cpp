@@ -193,7 +193,7 @@ void Box::set_color(Color c)
 	arc2->set_color(c);
 	arc3->set_color(c);
 	arc4->set_color(c);
-}
+}//	+7-981-871-22-01// мария // ЭдоЛайт
 void Box::set_style(Line_style ist)
 {
 	l1.set_style(ist);
@@ -205,6 +205,21 @@ void Box::set_style(Line_style ist)
 	arc2->set_style(ist);
 	arc3->set_style(ist);
 	arc4->set_style(ist);
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+void Arrow::draw_lines() const
+{
+	l1.draw();
+	l2.draw();
+	l3.draw();
+}
+void Arrow::set_color(Color c)
+{
+
+}
+void Arrow::set_style(Line_style ist)
+{
+
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 Axis::Axis(Orientation d, Point xy, int length, int n, string lab)

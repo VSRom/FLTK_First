@@ -221,14 +221,9 @@ struct Arc;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 struct Box : Shape
 {
-	//	Box(Line &xy1, Line &xy2, Line &xy3, Line &xy4, Arc &a1, Arc &a2, Arc &a3, Arc &a4)
-	//		: l1{ &xy1 }, l2{ &xy2 }, l3{ &xy3 }, l4{ &xy4 }, arc1{ &a1 }, arc2{ &a2 }, arc3{ &a3 }, arc4{ &a4 }
-	//	{ }
-
 	Box(Point x_1, Point y_1, Point x_2, Point y_2, Point x_3, Point y_3, Point x_4, Point y_4, Arc &a1, Arc &a2, Arc &a3, Arc &a4)
 		: l1{ x_1, y_1 }, l2{ x_2, y_2 }, l3{ x_3, y_3 }, l4{ x_4, y_4 }, arc1{ &a1 }, arc2{ &a2 }, arc3{ &a3 }, arc4{ &a4 }
-	{
-	}
+	{ }
 
 	void draw_lines() const;
 	void set_color(Color c);
@@ -237,6 +232,24 @@ struct Box : Shape
 private:
 	Line l1, l2, l3, l4;
 	Arc *arc1, *arc2, *arc3, *arc4;
+};
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+struct Arrow : Shape
+{
+	Arrow(Point xy1, Point xy2, int l)
+		:l1{ xy1, xy2 }, la(l)
+	{
+		l2{ xy2.x - la, xy2.y - la };
+		add(Point{ xy2.x + la, xy2.y + la });
+	}
+
+	void draw_lines() const;
+	void set_color(Color c);
+	void set_style(Line_style ist);
+
+private:
+	Line l1, l2, l3;
+	int la; // length arrow
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 struct Lines : Shape
@@ -444,4 +457,3 @@ private:
 
 }
 #endif
-
