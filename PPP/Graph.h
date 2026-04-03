@@ -11,14 +11,14 @@
 #include <functional>
 #include <iostream>
 #include <cmath>
-
+//=====================================================================================================
 constexpr double PI = 3.14159265358979323846;
-
+//=====================================================================================================
 namespace Graph_lib {
 // defense against ill-behaved Linux macros:
 #undef major
 #undef minor
-
+//=====================================================================================================
 struct Color {
 	enum Color_type {
 		red=FL_RED, blue=FL_BLUE, green=FL_GREEN,
@@ -41,7 +41,7 @@ private:
 	unsigned char v;	// 0 or 1 for now
 	Fl_Color c;
 };
-
+//=====================================================================================================
 struct Line_style {
 	enum Line_style_type {
 		solid=FL_SOLID,				// -------
@@ -60,7 +60,7 @@ private:
 	int s;
 	int w;
 };
-
+//=====================================================================================================
 class Font {
 public:
 	enum Font_type {
@@ -89,7 +89,7 @@ public:
 private:
 	int f;
 };
-
+//=====================================================================================================
 template<class T> class Vector_ref {
 	vector<T*> v;
 	vector<T*> owned;
@@ -115,9 +115,9 @@ public:
 	const T& operator[](int i) const { return *v[i]; }
 	int size() const { return v.size(); }
 };
-
+//=====================================================================================================
 typedef double Fct(double);
-
+//=====================================================================================================
 class Shape  {	// deals with color and style, and holds sequence of lines
 protected:
 	Shape() { }
@@ -168,13 +168,13 @@ private:
 //	Shape(const Shape&);
 //	Shape& operator=(const Shape&);
 };
-
+//=====================================================================================================
 struct Function : Shape {
 	// the function parameters are not stored
 	Function(Fct f, double r1, double r2, Point orig, int count = 100, double xscale = 25, double yscale = 25);
 	//Function(Point orig, Fct f, double r1, double r2, int count, double xscale = 1, double yscale = 1);	
 };
-
+//=====================================================================================================
 struct Fill {
 	Fill() :no_fill(true), fcolor(0) { }
 	Fill(Color c) :no_fill(false), fcolor(c) { }
@@ -185,7 +185,7 @@ protected:
 	bool no_fill;
 	Color fcolor;
 };
-
+//=====================================================================================================
 struct Line : Shape
 {
 	Line()
@@ -197,10 +197,9 @@ struct Line : Shape
 		add(p2);
 	}
 };
-
+//=====================================================================================================
 struct Rectangle : Shape
 {
-
 	Rectangle(Point xy, int ww, int hh)
 		:p{ xy }, w {ww}, h{ hh }
 	{
@@ -241,7 +240,7 @@ private:
 //	Color fcolor;	// fill color; 0 means "no fill"
 };
 struct Arc;
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//=====================================================================================================
 struct Box : Shape
 {
 	Box(Point x_1, Point y_1, Point x_2, Point y_2, Point x_3, Point y_3, Point x_4, Point y_4, Arc &a1, Arc &a2, Arc &a3, Arc &a4)
@@ -256,7 +255,7 @@ private:
 	Line l1, l2, l3, l4;
 	Arc *arc1, *arc2, *arc3, *arc4;
 };
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+//=====================================================================================================
 struct Arrow : Shape
 {
 	Arrow(Point xy1, Point xy2, int l, int angle_type)		// angle_type:: 0 == 30 angle, 1 == 45 angle
@@ -267,6 +266,7 @@ struct Arrow : Shape
 		l2 = new Line(xy2, p1);
 		l3 = new Line(xy2, p2);
 	}
+
 	~Arrow();
 	
 	static std::pair<Point, Point> calculation(const Point &xy1, const Point &xy2, const int &l, const int &angle_type);
@@ -279,7 +279,7 @@ private:
 	Line l1, *l2, *l3;
 	int la; //arrow normal
 };
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//=====================================================================================================
 struct Lines : Shape
 {	// indepentdent lines
 	Lines()
@@ -297,7 +297,7 @@ struct Lines : Shape
 		Shape::add(p2);
 	}
 };
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//=====================================================================================================
 struct Arc : Shape
 {
 	Arc(Point p, int ww, int hh, int s, int e)	// center, min, and max distance from center
@@ -326,30 +326,32 @@ private:
 	int start;
 	int end;
 };
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//=====================================================================================================
 bool intersect(Point p1, Point p2, Point p3, Point p4);
-
-struct Open_polyline : Shape {	// open sequence of lines
+//=====================================================================================================
+struct Open_polyline : Shape
+{	// open sequence of lines
 	using Shape::Shape;
 	void add(Point p) { Shape::add(p); }
 	void draw_lines() const;
 };
-
-struct Closed_polyline : Open_polyline {	// closed sequence of lines
+//=====================================================================================================
+struct Closed_polyline : Open_polyline
+{	// closed sequence of lines
 	using Open_polyline::Open_polyline;
 	void draw_lines() const;
 	
 //	void add(Point p) { Shape::add(p); }
 };
-
-
+//=====================================================================================================
 struct Polygon : Closed_polyline {	// closed sequence of non-intersecting lines
 	using Closed_polyline::Closed_polyline;
 	void add(Point p);
 	void draw_lines() const;
 };
-
-struct Text : Shape {
+//=====================================================================================================
+struct Text : Shape
+{
 	// the point is the bottom left of the first letter
 	Text(Point x, const string& s) : lab{ s } { add(x); }
 
@@ -368,9 +370,9 @@ private:
 	Font fnt{ fl_font() };
 	int fnt_sz{ (14<fl_size()) ? fl_size() : 14 };	// at least 14 point
 };
-
-
-struct Axis : Shape {
+//=====================================================================================================
+struct Axis : Shape
+{
 	// representation left public
 	enum Orientation { x, y, z };
 	Axis(Orientation d, Point xy, int length, int nummber_of_notches=0, string label = "");
@@ -385,8 +387,9 @@ struct Axis : Shape {
 //	Orientation orin;
 //	int notches;
 };
-
-struct Circle : Shape {
+//=====================================================================================================
+struct Circle : Shape
+{
 	Circle(Point p, int rr)	// center and radius
 	:r{ rr }
 	{
@@ -402,7 +405,7 @@ struct Circle : Shape {
 private:
 	int r;
 };
-
+//=====================================================================================================
 struct Ellipse : Shape
 {
 	Ellipse(Point p, int ww, int hh)	// center, min, and max distance from center
@@ -425,53 +428,49 @@ private:
 	int w;
 	int h;
 };
+//=====================================================================================================
 
-/*
 struct Mark : Text {
 	static const int dw = 4;
 	static const int dh = 4;
 	Mark(Point xy, char c) : Text(Point(xy.x-dw, xy.y+dh),string(1,c)) {}
 };
-*/
-
+//=====================================================================================================
 struct Marked_polyline : Open_polyline {
 	Marked_polyline(const string& m) :mark(m) { }
 	void draw_lines() const;
 private:
 	string mark;
 };
-
-struct Marks : Marked_polyline {
-	Marks(const string& m) :Marked_polyline(m)
-	{ set_color(Color(Color::invisible)); }
-};
-
-struct Mark : Marks {
-	Mark(Point xy, char c) : Marks(string(1,c)) {add(xy); }
-};
-
-/*
-
-struct Marks : Shape {
-	Marks(char m) : mark(string(1,m)) { }
-	void add(Point p) { Shape::add(p); }
-	void draw_lines() const;
-private:
-	string mark;
-};
-*/
-
+//=====================================================================================================
+//	struct Marks : Marked_polyline {
+//		Marks(const string& m) :Marked_polyline(m)
+//		{ set_color(Color(Color::invisible)); }
+//	};
+//=====================================================================================================
+//	struct Mark : Marks {
+//		Mark(Point xy, char c) : Marks(string(1,c)) {add(xy); }
+//	};
+//=====================================================================================================
+//	struct Marks : Shape {
+//		Marks(char m) : mark(string(1,m)) { }
+//		void add(Point p) { Shape::add(p); }
+//		void draw_lines() const;
+//	private:
+//		string mark;
+//	};
+//=====================================================================================================
 struct Bad_image : Fl_Image {
 	Bad_image(int h, int w) : Fl_Image(h,w,0) { }
 	void draw(int x,int y, int, int, int, int) { draw_empty(x,y); }
 };
-
+//=====================================================================================================
 struct Suffix {
 	enum Encoding { none, jpg, gif, bmp };
 };
-
+//=====================================================================================================
 Suffix::Encoding get_encoding(const string& s);
-
+//=====================================================================================================
 struct Image : Shape {
 	Image(Point xy, string s, Suffix::Encoding e = Suffix::none);
 	~Image() { delete p; }
@@ -483,6 +482,6 @@ private:
 	Fl_Image* p;
 	Text fn;
 };
-
+//=====================================================================================================
 }
 #endif

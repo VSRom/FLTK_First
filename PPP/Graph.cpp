@@ -2,12 +2,12 @@
 #include<map>
 
 namespace Graph_lib {
-
-	Shape::Shape(initializer_list<Point> lst)
-	{
-		for (auto p : lst)
-			add(p);
-	}
+//=====================================================================================================
+Shape::Shape(initializer_list<Point> lst)
+{
+	for (auto p : lst)
+		add(p);
+}
 
 void Shape::draw_lines() const
 {
@@ -26,8 +26,7 @@ void Shape::draw() const
 	fl_color(oldc);	// reset color (to pevious) and style (to default)
 	fl_line_style(0);
 }
-
-
+//=====================================================================================================
 // does two lines (p1,p2) and (p3,p4) intersect?
 // if se return the distance of the intersect point as distances from p1
 inline pair<double,double> line_intersect(Point p1, Point p2, Point p3, Point p4, bool& parallel) 
@@ -50,8 +49,7 @@ inline pair<double,double> line_intersect(Point p1, Point p2, Point p3, Point p4
 	return pair<double,double>( ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3))/denom,
 								((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3))/denom);
 }
-
-
+//=====================================================================================================
 //intersection between two line segments
 //Returns true if the two segments intersect,
 //in which case intersection is set to the point of intersection
@@ -63,7 +61,7 @@ bool line_segment_intersect(Point p1, Point p2, Point p3, Point p4, Point& inter
    intersection.y = p1.y + u.first*(p2.y - p1.y);
    return true;
 } 
-
+//=====================================================================================================
 void Polygon::add(Point p)
 {
 	int np = number_of_points();
@@ -85,14 +83,13 @@ void Polygon::add(Point p)
 
 	Closed_polyline::add(p);
 }
-
-
+//=====================================================================================================
 void Polygon::draw_lines() const
 {
 		if (number_of_points() < 3) error("less than 3 points in a Polygon");
 		Closed_polyline::draw_lines();
 }
-
+//=====================================================================================================
 void Open_polyline::draw_lines() const
 {
 		if (fill_color().visibility()) {
@@ -108,8 +105,7 @@ void Open_polyline::draw_lines() const
 		if (color().visibility())
 			Shape::draw_lines();
 }
-
-
+//=====================================================================================================
 void Closed_polyline::draw_lines() const
 {
 	Open_polyline::draw_lines();
@@ -117,6 +113,7 @@ void Closed_polyline::draw_lines() const
 	if (color().visibility())	// draw closing line:
 		fl_line(point(number_of_points()-1).x,point(number_of_points()-1).y,point(0).x,point(0).y);
 }
+//=====================================================================================================
 void Shape::move(int dx, int dy)
 {
 	for (unsigned int i = 0; i<points.size(); ++i) {
@@ -124,7 +121,7 @@ void Shape::move(int dx, int dy)
 		points[i].y+=dy;
 	}
 }
-
+//=====================================================================================================
 void Lines::draw_lines() const
 {
 //	if (number_of_points()%2==1) error("odd number of points in set of lines");
@@ -132,7 +129,7 @@ void Lines::draw_lines() const
 		for (int i=1; i<number_of_points(); i+=2)
 			fl_line(point(i-1).x,point(i-1).y,point(i).x,point(i).y);
 }
-
+//=====================================================================================================
 void Text::draw_lines() const
 {
 	int ofnt = fl_font();
@@ -141,7 +138,7 @@ void Text::draw_lines() const
 	fl_draw(lab.c_str(), point(0).x, point(0).y);
 	fl_font(ofnt,osz);
 }
-
+//=====================================================================================================
 Function::Function(Fct f, double r1, double r2, Point xy, int count, double xscale, double yscale)
 // graph f(x) for x in [r1:r2) using count line segments with (0,0) displayed at xy
 // x coordinates are scaled by xscale and y coordinates scaled by yscale
@@ -155,7 +152,7 @@ Function::Function(Fct f, double r1, double r2, Point xy, int count, double xsca
 		r += dist;
 	}
 }
-
+//=====================================================================================================
 void Rectangle::draw_lines() const
 {
 	if (fill_color().visibility()) {	// fill
@@ -169,7 +166,7 @@ void Rectangle::draw_lines() const
 		fl_rect(point(0).x,point(0).y,w,h);
 	}
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+//=====================================================================================================
 void Box::draw_lines() const
 {
 	l1.draw();
@@ -181,7 +178,6 @@ void Box::draw_lines() const
 	arc3->draw();
 	arc4->draw();
 }
-
 void Box::set_color(Color c)
 {
 	l1.set_color(c);
@@ -193,7 +189,7 @@ void Box::set_color(Color c)
 	arc2->set_color(c);
 	arc3->set_color(c);
 	arc4->set_color(c);
-}//	+7-981-871-22-01// мария // ЭдоЛайт
+}
 void Box::set_style(Line_style ist)
 {
 	l1.set_style(ist);
@@ -206,7 +202,7 @@ void Box::set_style(Line_style ist)
 	arc3->set_style(ist);
 	arc4->set_style(ist);
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+//=====================================================================================================
 void Arrow::draw_lines() const
 {
 	l1.draw();
@@ -230,6 +226,7 @@ Arrow::~Arrow()
 	delete l2;
 	delete l3;
 }
+//=====================================================================================================
 std::pair<Point, Point> Arrow::calculation(const Point &xy1, const Point &xy2, const int &l, const int &angle_type)
 {
 	double dx = xy2.x - xy1.x;	// direct vector 
@@ -256,7 +253,7 @@ std::pair<Point, Point> Arrow::calculation(const Point &xy1, const Point &xy2, c
 
 	return { p1, p2 };
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+//=====================================================================================================
 Axis::Axis(Orientation d, Point xy, int length, int n, string lab)
 	:label(Point(0,0),lab)
 {
@@ -296,29 +293,25 @@ Axis::Axis(Orientation d, Point xy, int length, int n, string lab)
 		error("z axis not implemented");
 	}
 }
-
 void Axis::draw_lines() const
 {
 	Shape::draw_lines();	// the line
 	notches.draw();	// the notches may have a different color from the line
 	label.draw();	// the label may have a different color from the line
 }
-
-
 void Axis::set_color(Color c)
 {
 	Shape::set_color(c);
 	notches.set_color(c);
 	label.set_color(c);
 }
-
 void Axis::move(int dx, int dy)
 {
 	Shape::move(dx,dy);
 	notches.move(dx,dy);
 	label.move(dx,dy);
 }
-
+//=====================================================================================================
 void Circle::draw_lines() const
 {
 	if (fill_color().visibility())
@@ -334,8 +327,7 @@ void Circle::draw_lines() const
 		fl_arc(point(0).x,point(0).y,r+r,r+r,0,360);
 	}
 }
-
-
+//=====================================================================================================
 void Ellipse::draw_lines() const
 {
 	if (fill_color().visibility())
@@ -351,7 +343,7 @@ void Ellipse::draw_lines() const
 		fl_arc(point(0).x,point(0).y,w+w,h+h,0,360);
 	}
 }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//=====================================================================================================
 void Arc::draw_lines() const
 {
 	if (color().visibility())
@@ -368,22 +360,20 @@ void draw_mark(Point xy, char c)
 	string m(1,c);
 	fl_draw(m.c_str(),xy.x-dx,xy.y+dy);
 }
-
+//=====================================================================================================
 void Marked_polyline::draw_lines() const
 {
 	Open_polyline::draw_lines();
 	for (int i=0; i<number_of_points(); ++i) 
 		draw_mark(point(i),mark[i%mark.size()]);
 }
-/*
-void Marks::draw_lines() const
-{
-	for (int i=0; i<number_of_points(); ++i) 
-		fl_draw(mark.c_str(),point(i).x-4,point(i).y+4);
-}
-*/
-
-
+//=====================================================================================================
+//	void Marks::draw_lines() const
+//	{
+//		for (int i=0; i<number_of_points(); ++i) 
+//			fl_draw(mark.c_str(),point(i).x-4,point(i).y+4);
+//	}
+//=====================================================================================================
 std::map<string,Suffix::Encoding> suffix_map;
 
 int init_suffix_map()
@@ -398,7 +388,7 @@ int init_suffix_map()
 	suffix_map["BMP"] = Suffix::bmp;
 	return 0;
 }
-
+//=====================================================================================================
 Suffix::Encoding get_encoding(const string& s)
 		// try to deduce type from file name using a lookup table
 {
@@ -410,15 +400,14 @@ Suffix::Encoding get_encoding(const string& s)
 	string suf(p+1,s.end());
 	return suffix_map[suf];
 }
-
+//=====================================================================================================
 bool can_open(const string& s)
             // check if a file named s exists and can be opened for reading
 {
 	ifstream ff(s.c_str());
 	return ff.is_open();
 }
-
-
+//=====================================================================================================
 // somewhat overelaborate constructor
 // because errors related to image files can be such a pain to debug
 Image::Image(Point xy, string s, Suffix::Encoding e)
@@ -441,15 +430,15 @@ Image::Image(Point xy, string s, Suffix::Encoding e)
 	case Suffix::gif:
 		p = new Fl_GIF_Image(s.c_str());
 		break;
-//	case Suffix::bmp:
-//		p = new Fl_BMP_Image(s.c_str());
-//		break;
+//												case Suffix::bmp:
+//													p = new Fl_BMP_Image(s.c_str());
+//													break;
 	default:	// Unsupported image encoding
 		fn.set_label("unsupported file type \""+s+'\"');
 		p = new Bad_image(30,20);	// the "error image"
 	}
 }
-
+//=====================================================================================================
 void Image::draw_lines() const
 {
 	if (fn.label()!="") fn.draw_lines();
@@ -459,5 +448,5 @@ void Image::draw_lines() const
 	else
 		p->draw(point(0).x,point(0).y);
 }
-
+//=====================================================================================================
 } // Graph

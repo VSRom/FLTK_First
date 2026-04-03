@@ -11,38 +11,63 @@ Point n(Rectangle &r)
 
 	return t;
 }
-//			Point s(Rectangle &r)
-//			{
-//			
-//			}
-//			Point e(Rectangle &r)
-//			{
-//			
-//			}
-//			Point w(Rectangle &r)
-//			{
-//			
-//			}
-//			Point center(Rectangle &r)
-//			{
-//			
-//			}
-//			Point ne(Rectangle &r)
-//			{
-//			
-//			}
-//			Point se(Rectangle &r)
-//			{
-//			
-//			}
-//			Point sw(Rectangle &r)
-//			{
-//			
-//			}
-//			Point nw(Rectangle &r)
-//			{
-//			
-//			}
+Point s(Rectangle &r)
+{
+	Point t(r.po());
+	t.x += r.width();
+	t.y += r.height() / 2;
+
+	return t;
+}
+Point e(Rectangle &r)
+{
+	Point t(r.po());
+	t.x += r.width() / 2;
+	t.y += r.height();
+
+	return t;
+}
+Point w(Rectangle &r)
+{
+	Point t(r.po());
+	t.x += r.width() / 2;
+
+	return t;
+}
+Point center(Rectangle &r)
+{
+	Point t(r.po());
+	t.x += r.width() / 2;
+	t.y += r.height() / 2;
+
+	return t;
+}
+Point ne(Rectangle &r)
+{
+	Point t(r.po());
+	t.y += r.height();
+
+	return t;
+}
+Point se(Rectangle &r)
+{
+	Point t(r.po());
+	t.x += r.width();
+	t.y += r.height();
+
+	return t;
+}
+Point sw(Rectangle &r)
+{
+	Point t(r.po());
+	t.x += r.width();
+
+	return t;
+}
+Point nw(Rectangle &r)
+{
+	return r.po();
+}
 //=======================================================================================================
 int main()
 {
@@ -52,8 +77,26 @@ int main()
 	r.set_style(Line_style(Line_style::solid, 7));
 	r.set_color(Color::dark_green);
 	win9I.attach(r);
-
+	
 	Point p1(n(r));
+	Point p2(s(r));
+	Point p3(e(r));
+	Point p4(w(r));
+	Point p5(center(r));
+	Point p6(ne(r));
+	Point p7(se(r));
+	Point p8(sw(r));
+	Point p9(nw(r));
+
+	Line l1(p1, p2);
+	Line l2(p3, p4);
+	Line l3(p5, p6);
+	Line l4(p7, p9);
+	
+	win9I.attach(l1);
+	win9I.attach(l2);
+	win9I.attach(l3);
+	win9I.attach(l4);
 
 	win9I.wait_for_button();
 }
