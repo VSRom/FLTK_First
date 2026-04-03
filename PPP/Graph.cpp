@@ -230,6 +230,32 @@ Arrow::~Arrow()
 	delete l2;
 	delete l3;
 }
+std::pair<Point, Point> Arrow::calculation(const Point &xy1, const Point &xy2, const int &l, const int &angle_type)
+{
+	double dx = xy2.x - xy1.x;	// direct vector 
+	double dy = xy2.y - xy1.y;
+	double dist_d = std::sqrt(dx * dx + dy * dy);
+	double vec_x = dx / dist_d;
+	double vec_y = dy / dist_d;
+	double angle{};
+
+	if (angle_type == 0)
+		angle = 30 * PI / 180;
+	else if (angle_type == 1)
+		angle = 45 * PI / 180;
+	else
+		error("Wrong type angle! 1 - 45 or 0 - 30");
+
+	double ux_l2 = vec_x * cos(angle) - vec_y * sin(angle);
+	double uy_l2 = vec_x * sin(angle) + vec_y * cos(angle);
+	double ux_l3 = vec_x * cos(angle) + vec_y * sin(angle);
+	double uy_l3 = -vec_x * sin(angle) + vec_y * cos(angle);
+
+	Point p1(xy2.x - ux_l2 * l, xy2.y - uy_l2 * l);
+	Point p2(xy2.x - ux_l3 * l, xy2.y - uy_l3 * l);
+
+	return { p1, p2 };
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 Axis::Axis(Orientation d, Point xy, int length, int n, string lab)
 	:label(Point(0,0),lab)

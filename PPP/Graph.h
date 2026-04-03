@@ -1,7 +1,7 @@
 
 #ifndef GRAPH_GUARD
 #define GRAPH_GUARD 1
-#define PI 3.14159265358979323846
+//#define PI 3.14159265358979323846
 #include "Point.h"
 #include <vector>
 #include <string>
@@ -11,6 +11,8 @@
 #include <functional>
 #include <iostream>
 #include <cmath>
+
+constexpr double PI = 3.14159265358979323846;
 
 namespace Graph_lib {
 // defense against ill-behaved Linux macros:
@@ -243,30 +245,15 @@ struct Arrow : Shape
 	Arrow(Point xy1, Point xy2, int l, int angle_type)		// angle_type:: 0 == 30 angle, 1 == 45 angle
 		:l1{ xy1, xy2 }, la(l), l2(nullptr), l3(nullptr)
 	{
-		double dx = xy2.x - xy1.x;	// direct vector 
-		double dy = xy2.y - xy1.y;
-		double dist_d = std::sqrt(dx * dx + dy * dy);
-		double vec_x = dx / dist_d;
-		double vec_y = dy / dist_d;
-		double angle = 0;
+		auto [p1, p2] = calculation(xy1, xy2, l, angle_type);
 
-		if (angle_type == 0)
-			angle = 30 * PI / 180;
-		else if (angle_type == 1)
-			angle = 45 * PI / 180;
-		else 
-			error("Wrong type angle! 1 - 45 or 0 - 30");
-
-		double ux_l2 = vec_x * cos(angle) - vec_y * sin(angle);
-		double uy_l2 = vec_x * sin(angle) + vec_y * cos(angle);
-		double ux_l3 = vec_x * cos(angle) + vec_y * sin(angle);
-		double uy_l3 = -vec_x * sin(angle) + vec_y * cos(angle);
-
-		l2 = new Line(xy2, Point(xy2.x - ux_l2 * la, (xy2.y - uy_l2 * la)));
-		l3 = new Line(xy2, Point(xy2.x - ux_l3 * la, (xy2.y - uy_l3 * la)));
+		l2 = new Line(xy2, p1);
+		l3 = new Line(xy2, p2);
 	}
 	~Arrow();
 	
+	static std::pair<Point, Point> calculation(const Point &xy1, const Point &xy2, const int &l, const int &angle_type);
+
 	void draw_lines() const;
 	void set_color(Color c);
 	void set_style(Line_style ist);
@@ -315,6 +302,7 @@ struct Arc : Shape
 	int major() const { return w; }
 	void set_minor(int hh) { h = hh; }
 	int minor() const { return h; }
+
 private:
 	int w;
 	int h;
