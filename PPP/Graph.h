@@ -201,12 +201,15 @@ struct Line : Shape
 struct Rectangle : Shape
 {
 
-	Rectangle(Point xy, int ww, int hh) :w{ ww }, h{ hh }
+	Rectangle(Point xy, int ww, int hh)
+		:p{ xy }, w {ww}, h{ hh }
 	{
-		if (h<=0 || w<=0) error("Bad rectangle: non-positive side");
+		if (h <= 0 || w <= 0) error("Bad rectangle: non-positive side");
 		add(xy);
 	}
-	Rectangle(Point x, Point y) :w{ y.x - x.x }, h{ y.y - x.y }
+
+	Rectangle(Point x, Point y)
+		:w{ y.x - x.x }, h{ y.y - x.y }
 	{
 		if (h<=0 || w<=0) error("Bad rectangle: first point is not top left");
 		add(x);
@@ -216,11 +219,25 @@ struct Rectangle : Shape
 //	void set_fill_color(Color col) { fcolor = col; }
 //	Color fill_color() { return fcolor; }
 
-	int height() const { return h; }
-	int width() const { return w; }
+	int height() const
+	{ 
+		return h;
+	}
+
+	int width() const
+	{ 
+		return w;
+	}
+
+	Point po() const
+	{
+		return p;
+	}
+
 private:
 	int h;			// height
 	int w;			// width
+	Point p;
 //	Color fcolor;	// fill color; 0 means "no fill"
 };
 struct Arc;
