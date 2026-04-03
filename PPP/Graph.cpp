@@ -215,11 +215,15 @@ void Arrow::draw_lines() const
 }
 void Arrow::set_color(Color c)
 {
-
+	l1.set_color(c);
+	l2->set_color(c);
+	l3->set_color(c);
 }
 void Arrow::set_style(Line_style ist)
 {
-
+	l1.set_style(ist);
+	l2->set_style(ist);
+	l3->set_style(ist);
 }
 Arrow::~Arrow()
 {

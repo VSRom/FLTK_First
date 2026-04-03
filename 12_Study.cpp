@@ -9,9 +9,11 @@ int main()
 	Simple_window win9I(Point(100, 100), 800, 800, "Hello");
 
 	Point tl1(400, 795);
-	Point tl2(300, 152);
+	Point tl2(300, 450);
 
 	Arrow ar(tl1, tl2, 100, 0);
+	ar.set_color(Color::dark_green);
+	ar.set_style(Line_style(Line_style::solid, 10));
 	win9I.attach(ar);
 
 //=======================================================================================================
