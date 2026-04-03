@@ -1,7 +1,7 @@
 
 #ifndef GRAPH_GUARD
 #define GRAPH_GUARD 1
-
+#define PI 3.14159265358979323846
 #include "Point.h"
 #include <vector>
 #include <string>
@@ -10,6 +10,7 @@
 #include "std_lib_facilities.h"  // ← Раскомментируй!
 #include <functional>
 #include <iostream>
+#include <cmath>
 
 namespace Graph_lib {
 // defense against ill-behaved Linux macros:
@@ -185,6 +186,9 @@ protected:
 
 struct Line : Shape
 {
+	Line()
+	{ }
+
 	Line(Point p1, Point p2)
 	{
 		add(p1);
@@ -236,20 +240,40 @@ private:
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 struct Arrow : Shape
 {
-	Arrow(Point xy1, Point xy2, int l)
-		:l1{ xy1, xy2 }, la(l)
+	Arrow(Point xy1, Point xy2, int l, int angle_type)		// angle_type:: 0 == 30 angle, 1 == 45 angle
+		:l1{ xy1, xy2 }, la(l), l2(nullptr), l3(nullptr)
 	{
-		l2{ xy2.x - la, xy2.y - la };
-		add(Point{ xy2.x + la, xy2.y + la });
-	}
+		double dx = xy2.x - xy1.x;	// direct vector 
+		double dy = xy2.y - xy1.y;
+		double dist_d = std::sqrt(dx * dx + dy * dy);
+		double vec_x = dx / dist_d;
+		double vec_y = dy / dist_d;
+		double angle = 0;
 
+		if (angle_type == 0)
+			angle = 30 * PI / 180;
+		else if (angle_type == 1)
+			angle = 45 * PI / 180;
+		else 
+			error("Wrong type angle! 1 - 45 or 0 - 30");
+
+		double ux_l2 = vec_x * cos(angle) - vec_y * sin(angle);
+		double uy_l2 = vec_x * sin(angle) + vec_y * cos(angle);
+		double ux_l3 = vec_x * cos(angle) + vec_y * sin(angle);
+		double uy_l3 = -vec_x * sin(angle) + vec_y * cos(angle);
+
+		l2 = new Line(xy2, Point(xy2.x - ux_l2 * la, (xy2.y - uy_l2 * la)));
+		l3 = new Line(xy2, Point(xy2.x - ux_l3 * la, (xy2.y - uy_l3 * la)));
+	}
+	~Arrow();
+	
 	void draw_lines() const;
 	void set_color(Color c);
 	void set_style(Line_style ist);
 
 private:
-	Line l1, l2, l3;
-	int la; // length arrow
+	Line l1, *l2, *l3;
+	int la; //arrow normal
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 struct Lines : Shape

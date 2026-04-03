@@ -210,8 +210,8 @@ void Box::set_style(Line_style ist)
 void Arrow::draw_lines() const
 {
 	l1.draw();
-	l2.draw();
-	l3.draw();
+	l2->draw();
+	l3->draw();
 }
 void Arrow::set_color(Color c)
 {
@@ -220,6 +220,11 @@ void Arrow::set_color(Color c)
 void Arrow::set_style(Line_style ist)
 {
 
+}
+Arrow::~Arrow()
+{
+	delete l2;
+	delete l3;
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 Axis::Axis(Orientation d, Point xy, int length, int n, string lab)
