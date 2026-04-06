@@ -29,7 +29,7 @@ void Shape::draw() const
 //=====================================================================================================
 // does two lines (p1,p2) and (p3,p4) intersect?
 // if se return the distance of the intersect point as distances from p1
-inline pair<double,double> line_intersect(Point p1, Point p2, Point p3, Point p4, bool& parallel) 
+inline pair<double,double> line_intersect(Point p1, Point p2, Point p3, Point p4, bool &parallel) 
 {
     double x1 = p1.x;
     double x2 = p2.x;
@@ -41,6 +41,7 @@ inline pair<double,double> line_intersect(Point p1, Point p2, Point p3, Point p4
 	double y4 = p4.y;
 
 	double denom = ((y4 - y3)*(x2-x1) - (x4-x3)*(y2-y1));
+
 	if (denom == 0){
 		parallel= true;
 		return pair<double,double>(0,0);
@@ -56,9 +57,13 @@ inline pair<double,double> line_intersect(Point p1, Point p2, Point p3, Point p4
 bool line_segment_intersect(Point p1, Point p2, Point p3, Point p4, Point& intersection){
    bool parallel;
    pair<double,double> u = line_intersect(p1,p2,p3,p4,parallel);
-   if (parallel || u.first < 0 || u.first > 1 || u.second < 0 || u.second > 1) return false;
+
+   if (parallel || u.first < 0 || u.first > 1 || u.second < 0 || u.second > 1)
+	   return false;
+
    intersection.x = p1.x + u.first*(p2.x - p1.x);
    intersection.y = p1.y + u.first*(p2.y - p1.y);
+
    return true;
 } 
 //=====================================================================================================
@@ -66,16 +71,24 @@ void Polygon::add(Point p)
 {
 	int np = number_of_points();
 
-	if (1<np) {	// check that thenew line isn't parallel to the previous one
+	if (1 < np)
+	{	// check that thenew line isn't parallel to the previous one
+
 		if (p==point(np-1)) error("polygon point equal to previous point");
+
 		bool parallel;
+
 		line_intersect(point(np-1),p,point(np-2),point(np-1),parallel);
-		if (parallel)
-			error("two polygon points lie in a straight line");
+
+			if (parallel)
+				error("two polygon points lie in a straight line");
 	}
 
-	for (int i = 1; i<np-1; ++i) {	// check that new segment doesn't interset and old point
+	for (int i = 1; i<np-1; ++i)
+	{	// check that new segment doesn't interset and old point
+
 		Point ignore(0,0);
+
 		if (line_segment_intersect(point(np-1),p,point(i-1),point(i),ignore))
 			error("intersect in polygon");
 	}
@@ -227,21 +240,14 @@ Arrow::~Arrow()
 	delete l3;
 }
 //=====================================================================================================
-std::pair<Point, Point> Arrow::calculation(const Point &xy1, const Point &xy2, const int &l, const int &angle_type)
+std::pair<Point, Point> Arrow::calculation(const Point &xy1, const Point &xy2, const int &l, const int &angle)
 {
 	double dx = xy2.x - xy1.x;	// direct vector 
 	double dy = xy2.y - xy1.y;
 	double dist_d = std::sqrt(dx * dx + dy * dy);
 	double vec_x = dx / dist_d;
 	double vec_y = dy / dist_d;
-	double angle{};
-
-	if (angle_type == 0)
-		angle = 30 * PI / 180;
-	else if (angle_type == 1)
-		angle = 45 * PI / 180;
-	else
-		error("Wrong type angle! 1 - 45 or 0 - 30");
+	double angle = angle * PI / 180;;
 
 	double ux_l2 = vec_x * cos(angle) - vec_y * sin(angle);
 	double uy_l2 = vec_x * sin(angle) + vec_y * cos(angle);

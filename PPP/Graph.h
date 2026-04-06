@@ -258,10 +258,10 @@ private:
 //=====================================================================================================
 struct Arrow : Shape
 {
-	Arrow(Point xy1, Point xy2, int l, int angle_type)		// angle_type:: 0 == 30 angle, 1 == 45 angle
+	Arrow(Point xy1, Point xy2, int l, int angle)
 		:l1{ xy1, xy2 }, la(l), l2(nullptr), l3(nullptr)
 	{
-		auto [p1, p2] = calculation(xy1, xy2, l, angle_type);
+		auto [p1, p2] = calculation(xy1, xy2, l, angle);
 
 		l2 = new Line(xy2, p1);
 		l3 = new Line(xy2, p2);
@@ -357,14 +357,36 @@ struct Text : Shape
 
 	void draw_lines() const;
 
-	void set_label(const string& s) { lab = s; }
-	string label() const { return lab; }
+	void set_label(const string& s)
+	{
+		lab = s;
+	}
 
-	void set_font(Font f) { fnt = f; }
-	Font font() const { return Font(fnt); }
+	string label() const
+	{
+		return lab;
+	}
 
-	void set_font_size(int s) { fnt_sz = s; }
-	int font_size() const { return fnt_sz; }
+	void set_font(Font f)
+	{
+		fnt = f;
+	}
+
+	Font font() const
+	{
+		return Font(fnt);
+	}
+
+	void set_font_size(int s)
+	{
+		fnt_sz = s;
+	}
+
+	int font_size() const
+	{
+		return fnt_sz;
+	}
+
 private:
 	string lab;	// label
 	Font fnt{ fl_font() };
@@ -391,17 +413,29 @@ struct Axis : Shape
 struct Circle : Shape
 {
 	Circle(Point p, int rr)	// center and radius
-	:r{ rr }
+		: r{ rr }
+
 	{
 		add(Point{ p.x - r, p.y - r });
 	}
 
 	void draw_lines() const;
 
-	Point center() const { return { point(0).x + r, point(0).y + r }; }
+	Point center() const
+	{
+		return { point(0).x + r, point(0).y + r };
+	}
 
-	void set_radius(int rr) { r=rr; }
-	int radius() const { return r; }
+	void set_radius(int rr)
+	{
+		r = rr;
+	}
+
+	int radius() const
+	{
+		return r;
+	}
+
 private:
 	int r;
 };
@@ -417,6 +451,7 @@ struct Ellipse : Shape
 	void draw_lines() const;
 
 	Point center() const { return{ point(0).x + w, point(0).y + h }; }
+
 	Point focus1() const { return{ center().x + int(sqrt(double(w*w - h*h))), center().y }; }
 	Point focus2() const { return{ center().x - int(sqrt(double(w*w - h*h))), center().y }; }
 	

@@ -4,7 +4,70 @@
 #include "PPP/GUI.h"
 #include "PPP/Window.h"
 //=======================================================================================================
+Point n(Circle &c)
+{
+	Point t(c.center());
 
+
+	return t;
+}
+Point s(Circle &c)
+{
+	Point t(r.po());
+	t.x += r.width();
+	t.y += r.height() / 2;
+
+	return t;
+}
+Point e(Circle &c)
+{
+	Point t(r.po());
+	t.x += r.width() / 2;
+	t.y += r.height();
+
+	return t;
+}
+Point w(Circle &c)
+{
+	Point t(r.po());
+	t.x += r.width() / 2;
+
+	return t;
+}
+Point center(Circle &c)
+{
+	Point t(r.po());
+	t.x += r.width() / 2;
+	t.y += r.height() / 2;
+
+	return t;
+}
+Point ne(Circle &c)
+{
+	Point t(r.po());
+	t.y += r.height();
+
+	return t;
+}
+Point se(Circle &c)
+{
+	Point t(r.po());
+	t.x += r.width();
+	t.y += r.height();
+
+	return t;
+}
+Point sw(Circle &c)
+{
+	Point t(r.po());
+	t.x += r.width();
+
+	return t;
+}
+Point nw(Circle &c)
+{
+	return r.po();
+}
 //=======================================================================================================
 int main()
 {
