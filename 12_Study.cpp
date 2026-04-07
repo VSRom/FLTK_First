@@ -4,70 +4,7 @@
 #include "PPP/GUI.h"
 #include "PPP/Window.h"
 //=======================================================================================================
-Point n(Circle &c)
-{
-	Point t(c.center());
 
-
-	return t;
-}
-Point s(Circle &c)
-{
-	Point t(r.po());
-	t.x += r.width();
-	t.y += r.height() / 2;
-
-	return t;
-}
-Point e(Circle &c)
-{
-	Point t(r.po());
-	t.x += r.width() / 2;
-	t.y += r.height();
-
-	return t;
-}
-Point w(Circle &c)
-{
-	Point t(r.po());
-	t.x += r.width() / 2;
-
-	return t;
-}
-Point center(Circle &c)
-{
-	Point t(r.po());
-	t.x += r.width() / 2;
-	t.y += r.height() / 2;
-
-	return t;
-}
-Point ne(Circle &c)
-{
-	Point t(r.po());
-	t.y += r.height();
-
-	return t;
-}
-Point se(Circle &c)
-{
-	Point t(r.po());
-	t.x += r.width();
-	t.y += r.height();
-
-	return t;
-}
-Point sw(Circle &c)
-{
-	Point t(r.po());
-	t.x += r.width();
-
-	return t;
-}
-Point nw(Circle &c)
-{
-	return r.po();
-}
 //=======================================================================================================
 int main()
 {
@@ -79,10 +16,147 @@ int main()
 //=======================================================================================================
 /*
 //=======================================================================================================
-	5. Определите функции из упр. 4 для классов Circle и Ellipse.
+	V	5. Определите функции из упр. 4 для классов Circle и Ellipse.
 Поместите точки соединения на границах и внутри этих фигур,
 но не за пределами окаймляющего их прямоугольника.
 //=======================================================================================================
+Point n(Circle &c)
+{
+	Point t(c.center());
+	t.y -= c.radius();
+	return t;
+}
+Point s(Circle &c)
+{
+	Point t(c.center());
+	t.y += c.radius();
+	return t;
+}
+Point e(Circle &c)
+{
+	Point t(c.center());
+	t.x += c.radius();
+	return t;
+}
+Point w(Circle &c)
+{
+	Point t(c.center());
+	t.x -= c.radius();
+	return t;
+}
+Point center(Circle &c)
+{
+	Point t(c.center());
+	return t;
+}
+Point ne(Circle &c)		//45a
+{
+	Point t(c.center());
+	double angle = 45;
+	angle = angle * PI / 180;
+	t.x += c.radius() * sin(angle);
+	t.y -= c.radius() * cos(angle);
+	return t;
+}
+Point se(Circle &c)		//135a
+{
+	Point t(c.center());
+	double angle = 135;
+	angle = angle * PI / 180;
+	t.x -= c.radius() * sin(angle);
+	t.y += c.radius() * cos(angle);
+
+	return t;
+}
+Point sw(Circle &c)		//225a
+{
+	Point t(c.center());
+	double angle = 225;
+	angle = angle * PI / 180;
+	t.x -= c.radius() * sin(angle);
+	t.y += c.radius() * cos(angle);
+
+	return t;
+}
+Point nw(Circle &c)		//315a
+{
+	Point t(c.center());
+	double angle = 315;
+	angle = angle * PI / 180;
+	t.x += c.radius() * sin(angle);
+	t.y -= c.radius() * cos(angle);
+
+	return t;
+}
+//=======================================================================================================
+Point n(Ellipse &e)
+{
+	Point t(e.center());
+	t.y -= e.minor();
+	return t;
+}
+Point s(Ellipse &e)
+{
+	Point t(e.center());
+	t.y += e.minor();
+	return t;
+}
+Point e(Ellipse &e)
+{
+	Point t(e.center());
+	t.x += e.major();
+	return t;
+}
+Point w(Ellipse &e)
+{
+	Point t(e.center());
+	t.x -= e.major();
+	return t;
+}
+Point center(Ellipse &e)
+{
+	Point t(e.center());
+	return t;
+}
+Point ne(Ellipse &e)		//45a
+{
+	Point t(e.center());
+	double angle = 45;
+	angle = angle * PI / 180;
+	t.x += e.major() * sin(angle);
+	t.y -= e.minor() * cos(angle);
+	return t;
+}
+Point se(Ellipse &e)		//135a
+{
+	Point t(e.center());
+	double angle = 135;
+	angle = angle * PI / 180;
+	t.x -= e.major() * sin(angle);
+	t.y += e.minor() * cos(angle);
+
+	return t;
+}
+Point sw(Ellipse &e)		//225a
+{
+	Point t(e.center());
+	double angle = 225;
+	angle = angle * PI / 180;
+	t.x -= e.major() * sin(angle);
+	t.y += e.minor() * cos(angle);
+
+	return t;
+}
+Point nw(Ellipse &e)		//315a
+{
+	Point t(e.center());
+	double angle = 315;
+	angle = angle * PI / 180;
+	t.x += e.major() * sin(angle);
+	t.y -= e.minor() * cos(angle);
+
+	return t;
+}
 
 //=======================================================================================================
 	V	4. Определите функции n(), s(), e(), w(), center(), ne(), se(), sw() и nw().

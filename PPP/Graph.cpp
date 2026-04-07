@@ -247,7 +247,7 @@ std::pair<Point, Point> Arrow::calculation(const Point &xy1, const Point &xy2, c
 	double dist_d = std::sqrt(dx * dx + dy * dy);
 	double vec_x = dx / dist_d;
 	double vec_y = dy / dist_d;
-	double angle = angle * PI / 180;;
+	double angle = angle * PI / 180;
 
 	double ux_l2 = vec_x * cos(angle) - vec_y * sin(angle);
 	double uy_l2 = vec_x * sin(angle) + vec_y * cos(angle);

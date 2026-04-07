@@ -450,15 +450,34 @@ struct Ellipse : Shape
 
 	void draw_lines() const;
 
-	Point center() const { return{ point(0).x + w, point(0).y + h }; }
+	Point center() const
+	{
+		return{ point(0).x + w, point(0).y + h };
+	}
 
 	Point focus1() const { return{ center().x + int(sqrt(double(w*w - h*h))), center().y }; }
 	Point focus2() const { return{ center().x - int(sqrt(double(w*w - h*h))), center().y }; }
 	
-	void set_major(int ww) { w=ww; }
-	int major() const { return w; }
-	void set_minor(int hh) { h=hh; }
-	int minor() const { return h; }
+	void set_major(int ww)
+	{
+		w = ww;
+	}
+
+	int major() const
+	{
+		return w;
+	}
+
+	void set_minor(int hh)
+	{
+		h = hh;
+	}
+
+	int minor() const
+	{
+		return h;
+	}
+
 private:
 	int w;
 	int h;
