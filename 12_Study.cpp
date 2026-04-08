@@ -10,8 +10,35 @@ int main()
 {
 	Simple_window win9I(Point(100, 100), 800, 800, "Hello");
 
+	Point tl1(50, 225);
+	Point tl2(50, 475);
 
+	Point tl3(75, 500);
+	Point tl4(375, 500);
 
+	Point tl5(400, 475);
+	Point tl6(400, 225);
+
+	Point tl7(375, 200);
+	Point tl8(75, 200);
+
+	Arc arc1(Point(75, 225), 25, 25, 90, 180);
+
+	Arc arc2(Point(75, 465), 25, 25, 180, 270);
+
+	Arc arc3(Point(365, 465), 25, 25, 270, 360);
+
+	Arc arc4(Point(365, 225), 25, 25, 0, 90);
+
+	Box_Text box_text(tl1, tl2, tl3, tl4, tl5, tl6, tl7, tl8, arc1, arc2, arc3, arc4, "Hello");
+	box_text.Box::set_color(Color::black);
+	box_text.set_fill_color(Color::dark_yellow);
+	box_text.Box::set_style(Line_style(Line_style::solid, 10));
+
+	box_text.Text::set_font_size(21);
+	box_text.Text::set_style(Line_style(Line_style::solid, 20));
+
+	win9I.attach(box_text);
 	win9I.wait_for_button();
 }
 //=======================================================================================================

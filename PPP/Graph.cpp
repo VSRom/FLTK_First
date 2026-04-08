@@ -173,6 +173,17 @@ void Rectangle::draw_lines() const
 //=====================================================================================================
 void Box::draw_lines() const
 {
+	if (fill_color().visibility())
+	{	// fill
+		fl_color(fill_color().as_int());
+
+		int w = l1.point(1).x - l1.point(0).x;
+		int h = l2.point(1).y - l2.point(0).y;
+
+		fl_rectf(point(0).x, point(0).y, w, h);
+		fl_color(color().as_int());	// reset color
+	}
+
 	l1.draw();
 	l2.draw();
 	l3.draw();
@@ -214,11 +225,6 @@ void Text::draw_lines() const
 	fl_font(fnt.as_int(), fnt_sz);
 	fl_draw(lab.c_str(), point(0).x, point(0).y);
 	fl_font(ofnt, osz);
-}
-//=====================================================================================================
-void Box_Text::draw_lines() const
-{
-
 }
 //=====================================================================================================
 void Arrow::draw_lines() const

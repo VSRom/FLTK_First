@@ -143,7 +143,11 @@ public:
 	Line_style style() const { return ls; }
 
 	void set_fill_color(Color col) { fcolor = col; }
-	Color fill_color() const { return fcolor; }
+
+	Color fill_color() const
+	{
+		return fcolor;
+	}
 
 	Point point(int i) const { return points[i]; }
 	int number_of_points() const { return int(points.size()); }
@@ -241,30 +245,6 @@ private:
 };
 struct Arc;
 //=====================================================================================================
-struct Arrow : Shape
-{
-	Arrow(Point xy1, Point xy2, int l, int angle)
-		:l1{ xy1, xy2 }, la(l), l2(nullptr), l3(nullptr)
-	{
-		auto [p1, p2] = calculation(xy1, xy2, l, angle);
-
-		l2 = new Line(xy2, p1);
-		l3 = new Line(xy2, p2);
-	}
-
-	~Arrow();
-	
-	static std::pair<Point, Point> calculation(const Point &xy1, const Point &xy2, const int &l, const int &angle_type);
-
-	void draw_lines() const;
-	void set_color(Color c);
-	void set_style(Line_style ist);
-
-private:
-	Line l1, *l2, *l3;
-	int la; //arrow normal
-};
-//=====================================================================================================
 struct Lines : Shape
 {	// indepentdent lines
 	Lines()
@@ -335,32 +315,68 @@ struct Polygon : Closed_polyline {	// closed sequence of non-intersecting lines
 	void draw_lines() const;
 };
 //=====================================================================================================
-struct Box : virtual Shape
+struct Arrow : Shape
 {
-	Box(Point x_1, Point y_1, Point x_2, Point y_2, Point x_3, Point y_3, Point x_4, Point y_4, Arc &a1, Arc &a2, Arc &a3, Arc &a4)
-		: l1{ x_1, y_1 }, l2{ x_2, y_2 }, l3{ x_3, y_3 }, l4{ x_4, y_4 }, arc1{ &a1 }, arc2{ &a2 }, arc3{ &a3 }, arc4{ &a4 }
+	Arrow(Point xy1, Point xy2, int l, int angle)
+		:l1{ xy1, xy2 }, la(l), l2(nullptr), l3(nullptr)
 	{
-		int h = x_2.y - x_1.y;
-		int w = x_3.x - x_2.x;
-		s = h * w;
+		auto [p1, p2] = calculation(xy1, xy2, l, angle);
+
+		l2 = new Line(xy2, p1);
+		l3 = new Line(xy2, p2);
 	}
+
+	~Arrow();
+
+	static std::pair<Point, Point> calculation(const Point &xy1, const Point &xy2, const int &l, const int &angle_type);
 
 	void draw_lines() const;
 	void set_color(Color c);
 	void set_style(Line_style ist);
 
 private:
+	Line l1, *l2, *l3;
+	int la; //arrow normal
+};
+//=====================================================================================================
+struct Box : virtual Shape
+{
+	Box(Point xy_1, Point yx_1, Point xy_2, Point yx_2, Point xy_3, Point yx_3, Point xy_4, Point yx_4, Arc &a1, Arc &a2, Arc &a3, Arc &a4)
+		: l1{ xy_1, yx_1 }, l2{ xy_2, yx_2 }, l3{ xy_3, yx_3 }, l4{ xy_4, yx_4 }, arc1{ &a1 }, arc2{ &a2 }, arc3{ &a3 }, arc4{ &a4 }
+	{
+		b_xy.x = xy_2.x;
+		int temp_y = xy_2.y - yx_1.y;
+		b_xy.y = yx_1.y - temp_y;
+	}
+
+	void draw_lines() const;
+	void set_color(Color c);
+	void set_style(Line_style ist);
+
+	Point text_box()
+	{
+		return b_xy;
+	}
+
+private:
 	Line l1, l2, l3, l4;
 	Arc *arc1, *arc2, *arc3, *arc4;
-	int s;
-
+	Point b_xy;
 };
 //=====================================================================================================
 struct Text : virtual Shape
 {
+	Text(const string &s)			// for text_box
+		: lab{ s }
+	{ }
+
 	// the point is the bottom left of the first letter
 	Text(Point x, const string& s)
-		: lab{ s } { add(x); }
+		: lab{ s }
+
+	{
+		add(x);
+	}
 
 	void draw_lines() const;
 
@@ -368,32 +384,26 @@ struct Text : virtual Shape
 	{
 		lab = s;
 	}
-
 	string label() const
 	{
 		return lab;
 	}
-
 	void set_font(Font f)
 	{
 		fnt = f;
 	}
-
 	Font font() const
 	{
 		return Font(fnt);
 	}
-
 	void set_font_size(int s)
 	{
 		fnt_sz = s;
 	}
-
 	int font_size() const
 	{
 		return fnt_sz;
 	}
-
 private:
 	string lab;	// label
 	Font fnt{ fl_font() };
@@ -402,23 +412,20 @@ private:
 //=====================================================================================================
 struct Box_Text : Box, Text
 {
-	Box_Text(Box b, Text t)
-		: box{ &b }, text{ &t }
+	Box_Text(Point xy_1, Point yx_1, Point xy_2, Point yx_2, Point xy_3, Point yx_3, Point xy_4, Point yx_4,
+		Arc &a1, Arc &a2, Arc &a3, Arc &a4, const string &t)
 
+		: Box{ xy_1, yx_1, xy_2, yx_2, xy_3, yx_3, xy_4, yx_4, a1, a2, a3, a4 }, Text{ t }
 	{
-		Point calc = 
-		t.add(calc);
+		add(text_box());
 	}
+
 
 	void draw_lines() const
 	{
 		Box::draw_lines();
 		Text::draw_lines();
 	}
-
-private:
-	Box *box;
-	Text *text;
 };
 //=====================================================================================================
 struct Axis : Shape
