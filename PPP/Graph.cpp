@@ -143,15 +143,6 @@ void Lines::draw_lines() const
 			fl_line(point(i-1).x,point(i-1).y,point(i).x,point(i).y);
 }
 //=====================================================================================================
-void Text::draw_lines() const
-{
-	int ofnt = fl_font();
-	int osz = fl_size();
-	fl_font(fnt.as_int(),fnt_sz);
-	fl_draw(lab.c_str(), point(0).x, point(0).y);
-	fl_font(ofnt,osz);
-}
-//=====================================================================================================
 Function::Function(Fct f, double r1, double r2, Point xy, int count, double xscale, double yscale)
 // graph f(x) for x in [r1:r2) using count line segments with (0,0) displayed at xy
 // x coordinates are scaled by xscale and y coordinates scaled by yscale
@@ -216,6 +207,20 @@ void Box::set_style(Line_style ist)
 	arc4->set_style(ist);
 }
 //=====================================================================================================
+void Text::draw_lines() const
+{
+	int ofnt = fl_font();
+	int osz = fl_size();
+	fl_font(fnt.as_int(), fnt_sz);
+	fl_draw(lab.c_str(), point(0).x, point(0).y);
+	fl_font(ofnt, osz);
+}
+//=====================================================================================================
+void Box_Text::draw_lines() const
+{
+
+}
+//=====================================================================================================
 void Arrow::draw_lines() const
 {
 	l1.draw();
@@ -240,14 +245,14 @@ Arrow::~Arrow()
 	delete l3;
 }
 //=====================================================================================================
-std::pair<Point, Point> Arrow::calculation(const Point &xy1, const Point &xy2, const int &l, const int &angle)
+std::pair<Point, Point> Arrow::calculation(const Point &xy1, const Point &xy2, const int &l, const int &angl)
 {
 	double dx = xy2.x - xy1.x;	// direct vector 
 	double dy = xy2.y - xy1.y;
 	double dist_d = std::sqrt(dx * dx + dy * dy);
 	double vec_x = dx / dist_d;
 	double vec_y = dy / dist_d;
-	double angle = angle * PI / 180;
+	double angle = angl * PI / 180;
 
 	double ux_l2 = vec_x * cos(angle) - vec_y * sin(angle);
 	double uy_l2 = vec_x * sin(angle) + vec_y * cos(angle);

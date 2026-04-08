@@ -241,21 +241,6 @@ private:
 };
 struct Arc;
 //=====================================================================================================
-struct Box : Shape
-{
-	Box(Point x_1, Point y_1, Point x_2, Point y_2, Point x_3, Point y_3, Point x_4, Point y_4, Arc &a1, Arc &a2, Arc &a3, Arc &a4)
-		: l1{ x_1, y_1 }, l2{ x_2, y_2 }, l3{ x_3, y_3 }, l4{ x_4, y_4 }, arc1{ &a1 }, arc2{ &a2 }, arc3{ &a3 }, arc4{ &a4 }
-	{ }
-
-	void draw_lines() const;
-	void set_color(Color c);
-	void set_style(Line_style ist);
-
-private:
-	Line l1, l2, l3, l4;
-	Arc *arc1, *arc2, *arc3, *arc4;
-};
-//=====================================================================================================
 struct Arrow : Shape
 {
 	Arrow(Point xy1, Point xy2, int l, int angle)
@@ -350,10 +335,32 @@ struct Polygon : Closed_polyline {	// closed sequence of non-intersecting lines
 	void draw_lines() const;
 };
 //=====================================================================================================
-struct Text : Shape
+struct Box : virtual Shape
+{
+	Box(Point x_1, Point y_1, Point x_2, Point y_2, Point x_3, Point y_3, Point x_4, Point y_4, Arc &a1, Arc &a2, Arc &a3, Arc &a4)
+		: l1{ x_1, y_1 }, l2{ x_2, y_2 }, l3{ x_3, y_3 }, l4{ x_4, y_4 }, arc1{ &a1 }, arc2{ &a2 }, arc3{ &a3 }, arc4{ &a4 }
+	{
+		int h = x_2.y - x_1.y;
+		int w = x_3.x - x_2.x;
+		s = h * w;
+	}
+
+	void draw_lines() const;
+	void set_color(Color c);
+	void set_style(Line_style ist);
+
+private:
+	Line l1, l2, l3, l4;
+	Arc *arc1, *arc2, *arc3, *arc4;
+	int s;
+
+};
+//=====================================================================================================
+struct Text : virtual Shape
 {
 	// the point is the bottom left of the first letter
-	Text(Point x, const string& s) : lab{ s } { add(x); }
+	Text(Point x, const string& s)
+		: lab{ s } { add(x); }
 
 	void draw_lines() const;
 
@@ -391,6 +398,27 @@ private:
 	string lab;	// label
 	Font fnt{ fl_font() };
 	int fnt_sz{ (14<fl_size()) ? fl_size() : 14 };	// at least 14 point
+};
+//=====================================================================================================
+struct Box_Text : Box, Text
+{
+	Box_Text(Box b, Text t)
+		: box{ &b }, text{ &t }
+
+	{
+		Point calc = 
+		t.add(calc);
+	}
+
+	void draw_lines() const
+	{
+		Box::draw_lines();
+		Text::draw_lines();
+	}
+
+private:
+	Box *box;
+	Text *text;
 };
 //=====================================================================================================
 struct Axis : Shape
