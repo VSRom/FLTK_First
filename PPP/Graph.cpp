@@ -176,11 +176,7 @@ void Box::draw_lines() const
 	if (fill_color().visibility())
 	{	// fill
 		fl_color(fill_color().as_int());
-
-		int w = l1.point(1).x - l1.point(0).x;
-		int h = l2.point(1).y - l2.point(0).y;
-
-		fl_rectf(point(0).x, point(0).y, w, h);
+		fl_rounded_rectf(xp, yp, ww, hh, 1);			// (x, y, w, h, r);
 		fl_color(color().as_int());	// reset color
 	}
 

@@ -269,6 +269,7 @@ struct Arc : Shape
 		:w{ ww }, h{ hh }, start(s), end(e)
 	{
 		add(Point{ p.x - ww, p.y - hh });
+		cent = p;
 	}
 
 	Arc()
@@ -285,11 +286,14 @@ struct Arc : Shape
 	void set_minor(int hh) { h = hh; }
 	int minor() const { return h; }
 
+	Point center() { return cent; }
+
 private:
 	int w;
 	int h;
 	int start;
 	int end;
+	Point cent;
 };
 //=====================================================================================================
 bool intersect(Point p1, Point p2, Point p3, Point p4);
@@ -344,11 +348,24 @@ struct Box : virtual Shape
 	Box(Point xy_1, Point yx_1, Point xy_2, Point yx_2, Point xy_3, Point yx_3, Point xy_4, Point yx_4, Arc &a1, Arc &a2, Arc &a3, Arc &a4)
 		: l1{ xy_1, yx_1 }, l2{ xy_2, yx_2 }, l3{ xy_3, yx_3 }, l4{ xy_4, yx_4 }, arc1{ &a1 }, arc2{ &a2 }, arc3{ &a3 }, arc4{ &a4 }
 	{
-		b_xy.x = xy_2.x;
+		int temp_x = xy_2.x - yx_1.x;
+		b_xy.x = xy_2.x + temp_x;
 		int temp_y = xy_2.y - yx_1.y;
 		b_xy.y = yx_1.y - temp_y;
-	}
 
+		int p1 = a1.center().x - a1.major();
+		int p2 = a1.center().y - a1.minor();
+		int p3 = a4.center().x + a4.major();
+		int p4 = a2.center().y + a2.minor();
+
+			ww = p3 - p1;
+			hh = p4 - p2;
+
+			xp = xy_1.x;
+			int yp_temp = xy_1.y - yx_4.y;
+			yp = xy_1.y - yp_temp;
+	}
+	// Arc(Point p, int ww, int hh, int s, int e)
 	void draw_lines() const;
 	void set_color(Color c);
 	void set_style(Line_style ist);
@@ -357,11 +374,22 @@ struct Box : virtual Shape
 	{
 		return b_xy;
 	}
+	int reth()
+	{
+		return hh;
+	}
+	int retw()
+	{
+		return ww;
+	}
 
 private:
+	int hh;
+	int ww;
 	Line l1, l2, l3, l4;
 	Arc *arc1, *arc2, *arc3, *arc4;
 	Point b_xy;
+	int xp, yp;
 };
 //=====================================================================================================
 struct Text : virtual Shape
@@ -419,7 +447,6 @@ struct Box_Text : Box, Text
 	{
 		add(text_box());
 	}
-
 
 	void draw_lines() const
 	{
