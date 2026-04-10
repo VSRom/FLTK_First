@@ -3,44 +3,147 @@
 #include "PPP/Graph.h"
 #include "PPP/GUI.h"
 #include "PPP/Window.h"
-//=======================================================================================================
 
+#include <memory>
+//=======================================================================================================
+std::unique_ptr<Arrow> arrow_setting(Point &t1, Point &t2, const int &l, const int &r)
+{
+	auto ar = std::make_unique<Arrow>(t1, t2, l, r);
+	ar->set_color(Color::black);
+	ar->set_style(Line_style(Line_style::solid, 3));
+
+	return ar;
+}
+//=======================================================================================================
+std::unique_ptr<Box_Text> box_setting(Point &t1, Point &t2, Point &t3, Point &t4, Point &t5, Point &t6, Point &t7, Point &t8, Arc &a1, Arc &a2, Arc &a3, Arc &a4, const std::string &str)
+{
+	auto box_text = std::make_unique<Box_Text> (t1, t2, t3, t4, t5, t6, t7, t8, a1, a2, a3, a4, str);
+	box_text->Box::set_color(Color::black);
+	box_text->Box::set_style(Line_style(Line_style::solid, 3));
+	box_text->Text::set_font_size(14);
+	box_text->Text::set_font(FL_BOLD);
+	box_text->Box::set_fill_color(Color::dark_yellow);
+
+	return box_text;
+}
 //=======================================================================================================
 int main()
 {
 	Simple_window win9I(Point(100, 100), 800, 800, "Hello");
+	//box-1(window)
+	Point tl1(115, 45);Point tl2(115, 60);Point tl3(120, 64);Point tl4(185, 64);Point tl5(189, 62);Point tl6(189, 45);Point tl7(187, 40);Point tl8(120, 40);
+	Arc arc1(Point(120, 45), 5, 5, 90, 180);Arc arc2(Point(120, 59), 5, 5, 180, 270);Arc arc3(Point(184, 59), 5, 5, 270, 360);Arc arc4(Point(184, 45), 5, 5, 0, 90);
+	//box-2(Simple_window)
+	Point ml1(90, 135);Point ml2(90, 155);Point ml3(95, 159);Point ml4(218, 159);Point ml5(222, 157);Point ml6(222, 137);Point ml7(220, 133);Point ml8(95, 133);
+	Arc mrc1(Point(95, 138), 5, 5, 90, 180);Arc mrc2(Point(95, 154), 5, 5, 180, 270);Arc mrc3(Point(217, 154), 5, 5, 270, 360);Arc mrc4(Point(217, 138), 5, 5, 0, 90);
+	//box-3(Line_style)
+	Point sl1(250, 45); Point sl2(250, 60); Point sl3(255, 64); Point sl4(341, 64); Point sl5(345, 62); Point sl6(345, 45); Point sl7(343, 40); Point sl8(255, 40);
+	Arc src1(Point(255, 45), 5, 5, 90, 180); Arc src2(Point(255, 59), 5, 5, 180, 270); Arc src3(Point(340, 59), 5, 5, 270, 360); Arc src4(Point(340, 45), 5, 5, 0, 90);
+	//box-4(Color)
+	Point gl1(365, 45); Point gl2(365, 60); Point gl3(370, 64); Point gl4(416, 64); Point gl5(420, 62); Point gl6(420, 45); Point gl7(418, 40); Point gl8(370, 40);
+	Arc grc1(Point(370, 45), 5, 5, 90, 180); Arc grc2(Point(370, 59), 5, 5, 180, 270); Arc grc3(Point(415, 59), 5, 5, 270, 360); Arc grc4(Point(415, 45), 5, 5, 0, 90);
+	//box-5(Shape)
+	Point ql1(278, 117); Point ql2(278, 137); Point ql3(283, 141); Point ql4(338, 141); Point ql5(342, 139); Point ql6(342, 119); Point ql7(340, 115); Point ql8(283, 115);
+	Arc qrc1(Point(283, 120), 5, 5, 90, 180); Arc qrc2(Point(283, 136), 5, 5, 180, 270); Arc qrc3(Point(337, 136), 5, 5, 270, 360); Arc qrc4(Point(337, 120), 5, 5, 0, 90);
+	//box-6(Point)
+	Point wl1(390, 136); Point wl2(390, 155); Point wl3(395, 159); Point wl4(445, 159); Point wl5(449, 157); Point wl6(449, 137); Point wl7(447, 133); Point wl8(395, 133);
+	Arc wrc1(Point(395, 138), 5, 5, 90, 180); Arc wrc2(Point(395, 154), 5, 5, 180, 270); Arc wrc3(Point(444, 154), 5, 5, 270, 360); Arc wrc4(Point(444, 138), 5, 5, 0, 90);
+	//box-7(Line)
+	Point el1(30, 260); Point el2(30, 279); Point el3(35, 283); Point el4(85, 283); Point el5(89, 281); Point el6(89, 261); Point el7(87, 257); Point el8(35, 257);
+	Arc erc1(Point(35, 262), 5, 5, 90, 180); Arc erc2(Point(35, 278), 5, 5, 180, 270); Arc erc3(Point(84, 278), 5, 5, 270, 360); Arc erc4(Point(84, 262), 5, 5, 0, 90);
+	//box-8(Lines)
+	Point rl1(105, 260); Point rl2(105, 279); Point rl3(110, 283); Point rl4(160, 283); Point rl5(164, 281); Point rl6(164, 261); Point rl7(162, 257); Point rl8(110, 257);
+	Arc rrc1(Point(110, 262), 5, 5, 90, 180); Arc rrc2(Point(110, 278), 5, 5, 180, 270); Arc rrc3(Point(159, 278), 5, 5, 270, 360); Arc rrc4(Point(159, 262), 5, 5, 0, 90);
+	//box-9(Polygon)
+	Point yl1(180, 260); Point yl2(180, 279); Point yl3(185, 283); Point yl4(260, 283); Point yl5(264, 281); Point yl6(264, 261); Point yl7(262, 257); Point yl8(185, 257);
+	Arc yrc1(Point(185, 262), 5, 5, 90, 180); Arc yrc2(Point(185, 278), 5, 5, 180, 270); Arc yrc3(Point(259, 278), 5, 5, 270, 360); Arc yrc4(Point(259, 262), 5, 5, 0, 90);
+	//box-10(Axis)
+	Point ul1(285, 260); Point ul2(285, 279); Point ul3(290, 283); Point ul4(340, 283); Point ul5(344, 281); Point ul6(344, 261); Point ul7(342, 257); Point ul8(290, 257);
+	Arc urc1(Point(290, 262), 5, 5, 90, 180); Arc urc2(Point(290, 278), 5, 5, 180, 270); Arc urc3(Point(339, 278), 5, 5, 270, 360); Arc urc4(Point(339, 262), 5, 5, 0, 90);
+	//box-11(Rectangle)
+	Point il1(360, 260); Point il2(360, 279); Point il3(365, 283); Point il4(450, 283); Point il5(454, 281); Point il6(454, 261); Point il7(452, 257); Point il8(365, 257);
+	Arc irc1(Point(365, 262), 5, 5, 90, 180); Arc irc2(Point(365, 278), 5, 5, 180, 270); Arc irc3(Point(449, 278), 5, 5, 270, 360); Arc irc4(Point(449, 262), 5, 5, 0, 90);
+	//box-12(Text)
+	Point ol1(473, 260); Point ol2(473, 279); Point ol3(478, 283); Point ol4(528, 283); Point ol5(532, 281); Point ol6(532, 261); Point ol7(530, 257); Point ol8(478, 257);
+	Arc orc1(Point(478, 262), 5, 5, 90, 180); Arc orc2(Point(478, 278), 5, 5, 180, 270); Arc orc3(Point(527, 278), 5, 5, 270, 360); Arc orc4(Point(527, 262), 5, 5, 0, 90);
+	//box-13(Image)
+	Point pl1(548, 260); Point pl2(548, 279); Point pl3(553, 283); Point pl4(603, 283); Point pl5(607, 281); Point pl6(607, 261); Point pl7(605, 257); Point pl8(553, 257);
+	Arc prc1(Point(553, 262), 5, 5, 90, 180); Arc prc2(Point(553, 278), 5, 5, 180, 270); Arc prc3(Point(602, 278), 5, 5, 270, 360); Arc prc4(Point(602, 262), 5, 5, 0, 90);
 
-	Point tl1(115, 45);
-	Point tl2(115, 60);
+	//arrow1
+	Point at1(154, 133); Point at2(154, 64);
+	//arrow2
+	Point ft1(57, 258); Point ft2(279, 139);
+	//arrow3
+	Point gt1(134, 258); Point gt2(289, 141);
+	//arrow4
+	Point ht1(221, 258); Point ht2(298, 141);
+	//arrow5
+	Point jt1(311, 258); Point jt2(311, 142);
+	//arrow6
+	Point kt1(405, 258); Point kt2(320, 142);
+	//arrow7
+	Point lt1(502, 258); Point lt2(332, 141);
+	//arrow8
+	Point pt1(576, 258); Point pt2(342, 139);
 
-	Point tl3(120, 64);
-	Point tl4(185, 64);
+	auto box_text1 = box_setting(tl1, tl2, tl3, tl4, tl5, tl6, tl7, tl8, arc1, arc2, arc3, arc4, "Window");
+	auto box_text2 = box_setting(ml1, ml2, ml3, ml4, ml5, ml6, ml7, ml8, mrc1, mrc2, mrc3, mrc4, "Simple_window");
+	auto box_text3 = box_setting(sl1, sl2, sl3, sl4, sl5, sl6, sl7, sl8, src1, src2, src3, src4, "Line_style");
+	auto box_text4 = box_setting(gl1, gl2, gl3, gl4, gl5, gl6, gl7, gl8, grc1, grc2, grc3, grc4, "Color");
+	auto box_text5 = box_setting(ql1, ql2, ql3, ql4, ql5, ql6, ql7, ql8, qrc1, qrc2, qrc3, qrc4, "Shape");
+	auto box_text6 = box_setting(wl1, wl2, wl3, wl4, wl5, wl6, wl7, wl8, wrc1, wrc2, wrc3, wrc4, "Point");
+	auto box_text7 = box_setting(el1, el2, el3, el4, el5, el6, el7, el8, erc1, erc2, erc3, erc4, "Line");
+	auto box_text8 = box_setting(rl1, rl2, rl3, rl4, rl5, rl6, rl7, rl8, rrc1, rrc2, rrc3, rrc4, "Lines");
+	auto box_text9 = box_setting(yl1, yl2, yl3, yl4, yl5, yl6, yl7, yl8, yrc1, yrc2, yrc3, yrc4, "Polygon");
+	auto box_text10 = box_setting(ul1, ul2, ul3, ul4, ul5, ul6, ul7, ul8, urc1, urc2, urc3, urc4, "Axis");
+	auto box_text11 = box_setting(il1, il2, il3, il4, il5, il6, il7, il8, irc1, irc2, irc3, irc4, "Rectangle");
+	auto box_text12 = box_setting(ol1, ol2, ol3, ol4, ol5, ol6, ol7, ol8, orc1, orc2, orc3, orc4, "Text");
+	auto box_text13 = box_setting(pl1, pl2, pl3, pl4, pl5, pl6, pl7, pl8, prc1, prc2, prc3, prc4, "Image");
 
-	Point tl5(189, 64);
-	Point tl6(189, 45);
-
-	Point tl7(187, 40);
-	Point tl8(120, 40);
-
-	Arc arc1(Point(120, 45), 5, 5, 90, 180);
-
-	Arc arc2(Point(120, 59), 5, 5, 180, 270);
-
-	Arc arc3(Point(184, 59), 5, 5, 270, 360);
-
-	Arc arc4(Point(184, 45), 5, 5, 0, 90);
-
-	Box_Text box_text(tl1, tl2, tl3, tl4, tl5, tl6, tl7, tl8, arc1, arc2, arc3, arc4, "Window");
-	box_text.Box::set_color(Color::black);
+	//arrow from box2 to box1
+	auto arrow1 = arrow_setting(at1, at2, 15, 10);
+	//arrow Line
+	auto arrow2 = arrow_setting(ft1, ft2, 15, 10);
+	//arrow Lines
+	auto arrow3 = arrow_setting(gt1, gt2, 15, 10);
+	//arrow Polygon
+	auto arrow4 = arrow_setting(ht1, ht2, 15, 10);
+	//arrow Axis
+	auto arrow5 = arrow_setting(jt1, jt2, 15, 10);
+	//arrow Rectangle
+	auto arrow6 = arrow_setting(kt1, kt2, 15, 10);
+	//arrow Text
+	auto arrow7 = arrow_setting(lt1, lt2, 15, 10);
+	//arrow Image
+	auto arrow8 = arrow_setting(pt1, pt2, 15, 10);
 	
-	box_text.Box::set_style(Line_style(Line_style::solid, 3));
-
-	box_text.Text::set_font_size(14);
-	box_text.Text::set_font(FL_BOLD);
 
 
-	box_text.Box::set_fill_color(Color::dark_yellow);
-	win9I.attach(box_text);
+	win9I.attach(*box_text1);
+	win9I.attach(*box_text2);
+	win9I.attach(*box_text3);
+	win9I.attach(*box_text4);
+	win9I.attach(*box_text5);
+	win9I.attach(*box_text6);
+	win9I.attach(*box_text7);
+	win9I.attach(*box_text8);
+	win9I.attach(*box_text9);
+	win9I.attach(*box_text10);
+	win9I.attach(*box_text11);
+	win9I.attach(*box_text12);
+	win9I.attach(*box_text13);
+
+	win9I.attach(*arrow1);
+	win9I.attach(*arrow2);
+	win9I.attach(*arrow3);
+	win9I.attach(*arrow4);
+	win9I.attach(*arrow5);
+	win9I.attach(*arrow6);
+	win9I.attach(*arrow7);
+	win9I.attach(*arrow8);
+
+
 	win9I.wait_for_button();
 }
 //=======================================================================================================

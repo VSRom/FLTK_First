@@ -340,7 +340,7 @@ struct Arrow : Shape
 
 private:
 	Line l1, *l2, *l3;
-	int la; //arrow normal
+	int la; //length feather arrow
 };
 //=====================================================================================================
 struct Box : virtual Shape
