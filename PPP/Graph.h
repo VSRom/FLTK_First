@@ -127,8 +127,16 @@ protected:
 //		ls(0),
 //		fcolor(Color::invisible) { }
 	
-	void add(Point p){ points.push_back(p); }
-	void set_point(int i, Point p) { points[i] = p; }
+	void add(Point p)
+	{
+		points.push_back(p);
+	}
+
+	void set_point(int i, Point p)
+	{
+		points[i] = p;
+	}
+
 public:
 	void draw() const;					// deal with color and draw_lines
 protected:
@@ -150,7 +158,10 @@ public:
 	}
 
 	Point point(int i) const { return points[i]; }
-	int number_of_points() const { return int(points.size()); }
+	int number_of_points() const
+	{
+		return int(points.size());
+	}
 
 	virtual ~Shape() { }
 	/*
@@ -249,9 +260,11 @@ struct Lines : Shape
 {	// indepentdent lines
 	Lines()
 	{}
-	Lines(initializer_list<Point> lst) : Shape{ lst }
+	Lines(initializer_list<Point> lst)
+		: Shape{ lst }
 	{
-		if (lst.size() % 2) error("odd number of points for Lines");
+		if (lst.size() % 2)
+			error("odd number of points for Lines");
 
 	}
 	void draw_lines() const;
@@ -265,11 +278,11 @@ struct Lines : Shape
 //=====================================================================================================
 struct Arc : Shape
 {
-	Arc(Point p, int ww, int hh, int s, int e)	// center, min, and max distance from center
-		:w{ ww }, h{ hh }, start(s), end(e)
+	Arc(Point p, int rr, int ww, int hh, int s, int e)	// center ,radius, start, end
+		: r{ rr }, w(ww), h(hh), start(s), end(e)
+
 	{
-		add(Point{ p.x - ww, p.y - hh });
-		cent = p;
+		add(Point{ p.x - r, p.y - r });
 	}
 
 	Arc()
@@ -277,23 +290,66 @@ struct Arc : Shape
 
 	void draw_lines() const;
 
-	Point center() const { return{ point(0).x + w, point(0).y + h }; }
-	Point focus1() const { return{ center().x + int(sqrt(double(w * w - h * h))), center().y }; }
-	Point focus2() const { return{ center().x - int(sqrt(double(w * w - h * h))), center().y }; }
+	Point center() const
+	{
+		return { point(0).x + r, point(0).y + r };
+	}
+
+	void set_radius(int rr)
+	{
+		r = rr;
+	}
+
+	int radius() const
+	{
+		return r;
+	}
 
 	void set_major(int ww) { w = ww; }
 	int major() const { return w; }
 	void set_minor(int hh) { h = hh; }
 	int minor() const { return h; }
 
-	Point center() { return cent; }
-
 private:
 	int w;
 	int h;
+	int r;
 	int start;
 	int end;
-	Point cent;
+};
+//=====================================================================================================
+struct Regular_hexogon : Shape
+{
+	Regular_hexogon(Point xy, int dd)	// point_center and distance to the first angle
+		:p{ xy }, d(dd)
+	{
+		for (int i = 0; i < 6; i++)
+		{
+			int iter = i * 60;
+
+			Point p = side(xy, dd, iter);
+			add(p);
+		}
+	}
+
+	void draw_lines() const;
+
+	int distance() const
+	{
+		return d;
+	}
+
+	Point po() const
+	{
+		return p;
+	}
+
+	static Point side(Point &p, int &dd, int &iter);
+
+private:
+	Point p;
+	int d;	//distance
+	//	Color fcolor;	// fill color; 0 means "no fill"
 };
 //=====================================================================================================
 bool intersect(Point p1, Point p2, Point p3, Point p4);

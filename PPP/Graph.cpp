@@ -249,7 +249,7 @@ Arrow::~Arrow()
 //=====================================================================================================
 std::pair<Point, Point> Arrow::calculation(const Point &xy1, const Point &xy2, const int &l, const int &angl)
 {
-	double dx = xy2.x - xy1.x;	// direct vector 
+	double dx = xy2.x - xy1.x;	// direct vector
 	double dy = xy2.y - xy1.y;
 	double dist_d = std::sqrt(dx * dx + dy * dy);
 	double vec_x = dx / dist_d;
@@ -265,6 +265,18 @@ std::pair<Point, Point> Arrow::calculation(const Point &xy1, const Point &xy2, c
 	Point p2(xy2.x - ux_l3 * l, xy2.y - uy_l3 * l);
 
 	return { p1, p2 };
+}
+//=====================================================================================================
+Point Regular_hexogon::side(Point &p, int &dd, int &iter)
+{
+	double angle = iter * PI / 180;
+
+	double x = p.x + dd * cos(angle);
+	double y = p.y - dd * sin(angle);
+
+	Point p1(x, y);
+
+	return p1;
 }
 //=====================================================================================================
 Axis::Axis(Orientation d, Point xy, int length, int n, string lab)
@@ -365,7 +377,33 @@ void Arc::draw_lines() const
 		fl_arc(point(0).x, point(0).y, w + w, h + h, start, end);
 	}
 }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//=====================================================================================================
+void Regular_hexogon::draw_lines() const
+{
+	if (fill_color().visibility())
+	{	// fill
+		fl_color(fill_color().as_int());
+
+		fl_begin_polygon();
+		fl_vertex(point(0).x, point(0).y);
+		fl_vertex(point(1).x, point(1).y);
+		fl_vertex(point(2).x, point(2).y);
+		fl_vertex(point(3).x, point(3).y);
+		fl_vertex(point(4).x, point(4).y);
+		fl_vertex(point(5).x, point(5).y);
+		fl_end_polygon();
+
+		fl_color(color().as_int());	// reset color
+	}
+
+	if (color().visibility())
+		for (int i = 1; i < number_of_points(); i++)
+			fl_line(point(i - 1).x, point(i - 1).y, point(i).x, point(i).y);
+
+	fl_line(point(5).x, point(5).y, point(0).x, point(0).y);
+
+}
+//=====================================================================================================
 void draw_mark(Point xy, char c)
 {
 	static const int dx = 4;
@@ -388,7 +426,7 @@ void Marked_polyline::draw_lines() const
 //	}
 //=====================================================================================================
 std::map<string,Suffix::Encoding> suffix_map;
-
+//=====================================================================================================
 int init_suffix_map()
 {
 	suffix_map["jpg"] = Suffix::jpg;
