@@ -157,10 +157,19 @@ public:
 		return fcolor;
 	}
 
-	Point point(int i) const { return points[i]; }
+	Point point(int i) const
+	{
+		return points[i];
+	}
+
 	int number_of_points() const
 	{
 		return int(points.size());
+	}
+
+	Point point_back() const
+	{
+		return points.back();
 	}
 
 	virtual ~Shape() { }
@@ -318,9 +327,56 @@ private:
 	int end;
 };
 //=====================================================================================================
+inline Point side(Point &p, int &dd, int &iter)
+{
+	double angle = iter * PI / 180;
+
+	double x = p.x + dd * cos(angle);
+	double y = p.y - dd * sin(angle);
+
+	Point p1(x, y);
+
+	return p1;
+}
+//=====================================================================================================
 struct Regular_hexogon : Shape
 {
-	Regular_hexogon(Point xy, int dd)	// point_center and distance to the first angle
+	Regular_hexogon(Point xy, int dd, int as)	// point_center, distance, amount side
+		:p{ xy }, d(dd), amount_side(as)
+	{
+		int angle = 360 / as;
+
+		for (int i = 0; i < as * 2; i++)
+		{
+			
+			int iter = i * angle;
+
+			Point p = side(xy, dd, iter);
+			add(p);
+		}
+	}
+
+	void draw_lines() const;
+
+	int distance() const
+	{
+		return d;
+	}
+
+	Point po() const
+	{
+		return p;
+	}
+
+private:
+	Point p;
+	int d;	//distance
+	int amount_side;
+};
+//=====================================================================================================
+struct Regular_hexogon_s : Shape
+{
+	Regular_hexogon_s(Point xy, int dd)	// point_center and distance to the first angle
 		:p{ xy }, d(dd)
 	{
 		for (int i = 0; i < 6; i++)
@@ -344,12 +400,9 @@ struct Regular_hexogon : Shape
 		return p;
 	}
 
-	static Point side(Point &p, int &dd, int &iter);
-
 private:
 	Point p;
 	int d;	//distance
-	//	Color fcolor;	// fill color; 0 means "no fill"
 };
 //=====================================================================================================
 bool intersect(Point p1, Point p2, Point p3, Point p4);

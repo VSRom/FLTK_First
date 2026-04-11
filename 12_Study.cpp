@@ -8,6 +8,11 @@ int main()
 {
 	Simple_window win9I(Point(100, 100), 1200, 800, "Hello");
 
+	Regular_hexogon rh(Point(200, 200), 50, 3);
+	rh.set_style(Line_style(Line_style::solid, 3));
+	rh.set_fill_color(Color::dark_red);
+
+	win9I.attach(rh);
 	win9I.wait_for_button();
 }
 //=======================================================================================================
@@ -26,7 +31,7 @@ int main()
 В качестве аргументов конструктора используйте центр и расстояние от центра до угловой точки.
 //=======================================================================================================
 
-	Regular_hexogon rh(Point(200, 200), 50);
+	Regular_hexogon_s rh(Point(200, 200), 50);
 	rh.set_style(Line_style(Line_style::solid, 3));
 	rh.set_fill_color(Color::dark_red);
 

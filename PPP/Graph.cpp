@@ -267,18 +267,6 @@ std::pair<Point, Point> Arrow::calculation(const Point &xy1, const Point &xy2, c
 	return { p1, p2 };
 }
 //=====================================================================================================
-Point Regular_hexogon::side(Point &p, int &dd, int &iter)
-{
-	double angle = iter * PI / 180;
-
-	double x = p.x + dd * cos(angle);
-	double y = p.y - dd * sin(angle);
-
-	Point p1(x, y);
-
-	return p1;
-}
-//=====================================================================================================
 Axis::Axis(Orientation d, Point xy, int length, int n, string lab)
 	:label(Point(0,0),lab)
 {
@@ -384,6 +372,28 @@ void Regular_hexogon::draw_lines() const
 	{	// fill
 		fl_color(fill_color().as_int());
 
+		for (int i = 0; i < number_of_points(); i++)
+		{
+			fl_begin_polygon();
+			fl_vertex(point(i).x, point(i).y);
+			fl_end_polygon();
+		}
+		fl_color(color().as_int());	// reset color
+	}
+
+	if (color().visibility())
+		for (int i = 1; i < number_of_points(); i++)
+			fl_line(point(i - 1).x, point(i - 1).y, point(i).x, point(i).y);
+
+	fl_line(point_back().x, point_back().y, point(0).x, point(0).y);
+}
+//=====================================================================================================
+void Regular_hexogon_s::draw_lines() const
+{
+	if (fill_color().visibility())
+	{	// fill
+		fl_color(fill_color().as_int());
+
 		fl_begin_polygon();
 		fl_vertex(point(0).x, point(0).y);
 		fl_vertex(point(1).x, point(1).y);
@@ -401,7 +411,6 @@ void Regular_hexogon::draw_lines() const
 			fl_line(point(i - 1).x, point(i - 1).y, point(i).x, point(i).y);
 
 	fl_line(point(5).x, point(5).y, point(0).x, point(0).y);
-
 }
 //=====================================================================================================
 void draw_mark(Point xy, char c)
