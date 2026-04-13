@@ -8,15 +8,35 @@ int main()
 {
 	Simple_window win9I(Point(100, 100), 1200, 800, "Hello");
 
-	Vector_ref<Rectangle> vr;
-	for (int i = 0; i < 16; ++i)
-		for (int j = 0; j < 16; ++j)
+	Vector_ref<Triangle> tr;
+	
+	for (int i = 0, k = 1; i < 8; ++i)
 		{
-			vr.push_back(new Rectangle(Point(i * 20, j * 20), 20, 20));
-			vr[vr.size() - 1].set_fill_color(Color(i * 16 + j));
-			vr[vr.size() - 1].set_style(Line_style(Line_style::none));
-			win9I.attach(vr[vr.size() - 1]);
+			tr.push_back(new Triangle(Point(500, 600), 100, 150, i * 45));
+			tr[tr.size() - 1].set_fill_color(Color(i * 16 + 1));
+			tr[tr.size() - 1].set_style(Line_style(Line_style::solid, 2));
+			win9I.attach(tr[tr.size() - 1]);
 		}
+
+	//	Triangle tring(Point(500, 700), 100, 150, 0);
+	//	tring.set_style(Line_style(Line_style::solid, 3));
+	//	tring.set_fill_color(Color::dark_green);
+	//	win9I.attach(tring);
+	//	
+	//	Triangle tring2(Point(500, 700), -100, 150, 45);
+	//	tring2.set_style(Line_style(Line_style::solid, 3));
+	//	tring2.set_fill_color(Color::dark_red);
+	//	win9I.attach(tring2);
+	//	
+	//	Triangle tring3(Point(600, 700), 100, 150, 90);
+	//	tring3.set_style(Line_style(Line_style::solid, 3));
+	//	tring3.set_fill_color(Color::dark_yellow);
+	//	win9I.attach(tring3);
+	//	
+	//	Triangle tring4(Point(600, 700), 100, 150, 135);
+	//	tring4.set_style(Line_style(Line_style::solid, 3));
+	//	tring4.set_fill_color(Color::dark_yellow);
+	//	win9I.attach(tring4);
 
 	win9I.wait_for_button();
 }
@@ -24,7 +44,8 @@ int main()
 /*
 
 //=======================================================================================================
-
+	14. Определите класс для прямоугольного треугольника.
+Составьте восьмиугольник из восьми прямоугольных треугольников разного цвета.
 //=======================================================================================================
 
 //=======================================================================================================

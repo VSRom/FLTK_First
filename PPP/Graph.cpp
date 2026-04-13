@@ -171,6 +171,28 @@ void Rectangle::draw_lines() const
 	}
 }
 //=====================================================================================================
+void Triangle::draw_lines() const
+{
+	if (fill_color().visibility())
+	{	// fill
+		fl_color(fill_color().as_int());
+
+		fl_begin_polygon();
+
+		for (int i = 0; i < number_of_points(); i++)
+			fl_vertex(point(i).x, point(i).y);
+
+		fl_end_polygon();
+		fl_color(color().as_int());	// reset color
+	}
+
+	if (color().visibility())
+		for (int i = 1; i < number_of_points(); i++)
+			fl_line(point(i - 1).x, point(i - 1).y, point(i).x, point(i).y);
+
+	fl_line(point_back().x, point_back().y, point(0).x, point(0).y);
+}
+//=====================================================================================================
 void Box::draw_lines() const
 {
 	if (fill_color().visibility())

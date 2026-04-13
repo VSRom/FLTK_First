@@ -266,6 +266,55 @@ private:
 };
 struct Arc;
 //=====================================================================================================
+inline std::pair<Point, Point> rotate_triangle(Point &o, const double &side_a, const double &side_b, int &iter)
+{
+	double angle = iter * PI / 180;
+
+	double x = o.x + side_a * cos(angle);
+	double y = o.y + side_a * sin(angle);
+
+	double x2 = o.x + side_b * sin(angle);
+	double y2 = o.y - side_b * cos(angle);
+
+	Point rotate1(x, y);
+	Point rotate2(x2, y2);
+
+	return { rotate1, rotate2 };
+}
+//=====================================================================================================
+struct Triangle : Shape
+{
+	Triangle(Point xy, double side_a, double side_b, int rotate)
+		: p{ xy }, sa(side_a), sb(side_b), angle(rotate)
+	{
+		add(xy);
+
+		if (rotate != 0)
+		{
+			auto [psa, psb] = rotate_triangle(xy, side_a, side_b, rotate);
+			add(psa);
+			add(psb);
+		}
+
+		if (rotate == 0)
+		{
+			Point psa(xy.x + side_a, xy.y);
+			Point psb(xy.x, xy.y - side_b);
+			add(psa);
+			add(psb);
+		}
+	}
+
+	void draw_lines() const;
+
+
+private:
+	Point p;
+	double sa;
+	double sb;
+	int angle;
+};
+//=====================================================================================================
 struct Lines : Shape
 {	// indepentdent lines
 	Lines()
@@ -349,7 +398,6 @@ struct Regular_hexogon : Shape
 
 		for (int i = 0; i < as * 2; i++)
 		{
-			
 			int iter = i * angle;
 
 			Point p = side(xy, dd, iter);
