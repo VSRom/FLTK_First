@@ -270,16 +270,63 @@ inline std::pair<Point, Point> rotate_triangle(Point &o, const double &side_a, c
 {
 	double angle = iter * PI / 180;
 
-	double x = o.x + side_a * cos(angle);
-	double y = o.y + side_a * sin(angle);
+	// point O == angle 90
+	//	double x = o.x + side_a * cos(angle);
+	//	double y = o.y + side_a * sin(angle);
+	//	
+	//	double x2 = o.x + side_b * sin(angle);
+	//	double y2 = o.y - side_b * cos(angle);
 
-	double x2 = o.x + side_b * sin(angle);
-	double y2 = o.y - side_b * cos(angle);
+	// point O == top point a
 
-	Point rotate1(x, y);
-	Point rotate2(x2, y2);
+
+	Point psa(o.x, o.y + side_b);
+	Point psb(o.x + side_a, o.y + side_b);
+
+
+
+	double dx = psa.x - o.x;	// direct vector
+	double dy = psa.y - o.y;
+	double dx2 = psb.x - o.x;
+	double dy2 = psb.y - o.y;
+
+	double dist_d = std::sqrt(dx * dx + dy * dy);
+	double dist_d2 = std::sqrt(dx2 * dx2 + dy2 * dy2);
+
+	double vec_x = dx / dist_d;
+	double vec_y = dy / dist_d;
+
+	double vec_x2 = dx2 / dist_d2;
+	double vec_y2 = dy2 / dist_d2;
+
+
+
+
+	double ux_l2 = vec_x * cos(angle) - vec_y * sin(angle);
+	double uy_l2 = vec_x * sin(angle) + vec_y * cos(angle);
+
+	double ux_l3 = vec_x2 * cos(angle) - vec_y2 * sin(angle);
+	double uy_l3 = vec_x2 * sin(angle) + vec_y2 * cos(angle);
+
+
+
+
+	Point rotate1(o.x + ux_l2 * dist_d, o.y + uy_l2 * dist_d);
+	Point rotate2(o.x + ux_l3 * dist_d2, o.y + uy_l3 * dist_d2);
+
+	if ((iter / 45) % 2 == 1)
+		return { rotate2, rotate1 };
 
 	return { rotate1, rotate2 };
+
+	//	double x = o.x + side_a * cos(angle);
+	//	double y = o.y + side_b * sin(angle);
+	//	
+	//	double x2 = o.x + side_a * cos(angle);
+	//	double y2 = o.y - side_b * sin(angle);
+
+
+	
 }
 //=====================================================================================================
 struct Triangle : Shape
@@ -298,8 +345,14 @@ struct Triangle : Shape
 
 		if (rotate == 0)
 		{
-			Point psa(xy.x + side_a, xy.y);
-			Point psb(xy.x, xy.y - side_b);
+			// point O == top point a
+			Point psa(xy.x, xy.y + side_b);
+			Point psb(xy.x + side_a, xy.y + side_b);
+			
+			
+			// point O == angle 90
+			//	Point psa(xy.x + side_a, xy.y);
+			//	Point psb(xy.x, xy.y - side_b);
 			add(psa);
 			add(psb);
 		}

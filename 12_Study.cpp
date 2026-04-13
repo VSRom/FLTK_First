@@ -10,7 +10,7 @@ int main()
 
 	Vector_ref<Triangle> tr;
 	
-	for (int i = 0, k = 1; i < 8; ++i)
+	for (int i = 0; i < 8; ++i)
 		{
 			tr.push_back(new Triangle(Point(500, 600), 100, 150, i * 45));
 			tr[tr.size() - 1].set_fill_color(Color(i * 16 + 1));
@@ -18,7 +18,7 @@ int main()
 			win9I.attach(tr[tr.size() - 1]);
 		}
 
-	//	Triangle tring(Point(500, 700), 100, 150, 0);
+	//	Triangle tring(Point(500, 500), 100, 150, 0);
 	//	tring.set_style(Line_style(Line_style::solid, 3));
 	//	tring.set_fill_color(Color::dark_green);
 	//	win9I.attach(tring);
