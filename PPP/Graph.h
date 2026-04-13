@@ -49,6 +49,7 @@ struct Line_style {
 		dot=FL_DOT,					// ....... 
 		dashdot=FL_DASHDOT,			// - . - . 
 		dashdotdot=FL_DASHDOTDOT,	// -..-..
+		none=FL_NONE,				//         
 	};
 	Line_style(Line_style_type ss) :s(ss), w(0) { }
 	Line_style(Line_style_type lst, int ww) :s(lst), w(ww) { }
