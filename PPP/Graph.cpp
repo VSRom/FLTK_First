@@ -371,13 +371,13 @@ void Regular_hexogon::draw_lines() const
 	if (fill_color().visibility())
 	{	// fill
 		fl_color(fill_color().as_int());
-
-		for (int i = 0; i < number_of_points(); i++)
-		{
-			fl_begin_polygon();
+		
+		fl_begin_polygon();
+		
+		for (int i = 0; i < number_of_points() / 2; i++)
 			fl_vertex(point(i).x, point(i).y);
-			fl_end_polygon();
-		}
+
+		fl_end_polygon();
 		fl_color(color().as_int());	// reset color
 	}
 
