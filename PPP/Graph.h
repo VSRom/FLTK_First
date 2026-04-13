@@ -327,7 +327,7 @@ private:
 	int end;
 };
 //=====================================================================================================
-inline Point side(Point &p, int &dd, int &iter)
+inline Point side(Point &p, const int &dd, int &iter)
 {
 	double angle = iter * PI / 180;
 
