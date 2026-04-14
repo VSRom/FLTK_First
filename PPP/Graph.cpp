@@ -143,6 +143,59 @@ void Lines::draw_lines() const
 			fl_line(point(i-1).x,point(i-1).y,point(i).x,point(i).y);
 }
 //=====================================================================================================
+void Star::draw_lines() const
+{
+	{
+		{
+			if (fill_color().visibility())
+			{	// fill
+				fl_color(fill_color().as_int());
+
+				fl_begin_polygon();
+
+				for (int i = 0; i < number_of_points(); i++)
+					fl_vertex(point(i).x, point(i).y);
+
+				//	fl_vertex(point_front().x, point_front().y);
+
+				fl_end_polygon();
+				fl_color(color().as_int());	// reset color
+			}
+
+			if (color().visibility())
+				for (int i = 1; i < number_of_points(); i++)
+					fl_line(point(i - 1).x, point(i - 1).y, point(i).x, point(i).y);
+
+			fl_line(point_back().x, point_back().y, point(0).x, point(0).y);
+		}
+	}
+}
+//=====================================================================================================
+Point Star::get_star_points_out(const Point &p, double &step, const int iter)
+{
+	double angle_out = rotate + iter * step;
+	double angle_out_radian = angle_out * PI / 180;
+
+	double x_out(p.x + radius * cos(angle_out_radian));
+	double y_out(p.y + radius * sin(angle_out_radian));
+
+	Point xy(x_out, y_out);
+	return xy;
+}
+//=====================================================================================================
+Point Star::get_star_points_in(const Point &p, double &step, const int iter)
+{
+	double angle_in = rotate + iter * step + (step / 2);
+	double angle_in_radian = angle_in * PI / 180;
+
+	double x_in(p.x + ( radius / 2 ) * cos(angle_in_radian));
+	double y_in(p.y + ( radius / 2 ) * sin(angle_in_radian));
+
+	Point xy(x_in, y_in);
+	
+	return xy;
+}
+//=====================================================================================================
 void Poly::draw_lines() const
 {
 	{

@@ -417,6 +417,39 @@ private:
 	int end;
 };
 //=====================================================================================================
+struct Star : Shape
+{
+	Star(Point &p, int as, int rr, int rot) // point center, amount top start, radius and rotate
+		: amount_top(as), radius(rr), rotate(rot)
+	{
+		if (amount_top < 4) error("non-positive Star!");
+		if (radius <= 0) error("non-positive Star!");
+
+		double step = 360 / amount_top;
+
+		for (int i = 0; i < amount_top; i++)
+		{
+			
+			Point p_out = get_star_points_out(p, step, i);
+			add(p_out);
+
+			Point p_in = get_star_points_in(p, step, i);
+			add(p_in);
+		}
+	}
+
+	Point get_star_points_out(const Point &p, double &step, const int iter);
+	Point get_star_points_in(const Point &p, double &step, const int iter);
+
+	void draw_lines() const;
+
+private:
+	int amount_top;
+	int radius;
+	int height;
+	int rotate;
+};
+//=====================================================================================================
 struct Poly : Shape
 {
 	Poly(const initializer_list<Point> &lst)
