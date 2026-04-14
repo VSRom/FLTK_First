@@ -299,16 +299,11 @@ inline std::pair<Point, Point> rotate_triangle(Point &o, const double &side_a, c
 	double vec_x2 = dx2 / dist_d2;
 	double vec_y2 = dy2 / dist_d2;
 
-
-
-
 	double ux_l2 = vec_x * cos(angle) - vec_y * sin(angle);
 	double uy_l2 = vec_x * sin(angle) + vec_y * cos(angle);
 
 	double ux_l3 = vec_x2 * cos(angle) - vec_y2 * sin(angle);
 	double uy_l3 = vec_x2 * sin(angle) + vec_y2 * cos(angle);
-
-
 
 
 	Point rotate1(o.x + ux_l2 * dist_d, o.y + uy_l2 * dist_d);
@@ -325,8 +320,6 @@ inline std::pair<Point, Point> rotate_triangle(Point &o, const double &side_a, c
 	//	double x2 = o.x + side_a * cos(angle);
 	//	double y2 = o.y - side_b * sin(angle);
 
-
-	
 }
 //=====================================================================================================
 struct Triangle : Shape

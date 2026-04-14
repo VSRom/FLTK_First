@@ -6,37 +6,28 @@
 //=======================================================================================================
 int main()
 {
-	Simple_window win9I(Point(100, 100), 1200, 800, "Hello");
+	Simple_window win9I(Point(0, 0), 600, 400, "Hello");
 
-	Vector_ref<Triangle> tr;
-	
-	for (int i = 0; i < 8; ++i)
+	int x_size = win9I.x_max();
+	int y_size = win9I.y_max();
+	win9I.wait_for_button();
+
+	Point center(0, 0);
+	Vector_ref<Regular_hexogon> rh;
+
+	for (int i = 0; i < x_size; ++i)
+	{
+		for (int j = 0; j < y_size; ++j)
 		{
-			tr.push_back(new Triangle(Point(500, 600), 100, 150, i * 45));
-			tr[tr.size() - 1].set_fill_color(Color(i * 16 + 1));
-			tr[tr.size() - 1].set_style(Line_style(Line_style::solid, 2));
-			win9I.attach(tr[tr.size() - 1]);
+			rh.push_back(new Regular_hexogon(Point(center.x, center.y), 15, 6));
+			rh[rh.size() - 1].set_fill_color(Color(i * 1 + j));
+			rh[rh.size() - 1].set_style(Line_style(Line_style::solid, 2));
+			win9I.attach(rh[rh.size() - 1]);
+			center.y += 30;
 		}
-
-	//	Triangle tring(Point(500, 500), 100, 150, 0);
-	//	tring.set_style(Line_style(Line_style::solid, 3));
-	//	tring.set_fill_color(Color::dark_green);
-	//	win9I.attach(tring);
-	//	
-	//	Triangle tring2(Point(500, 700), -100, 150, 45);
-	//	tring2.set_style(Line_style(Line_style::solid, 3));
-	//	tring2.set_fill_color(Color::dark_red);
-	//	win9I.attach(tring2);
-	//	
-	//	Triangle tring3(Point(600, 700), 100, 150, 90);
-	//	tring3.set_style(Line_style(Line_style::solid, 3));
-	//	tring3.set_fill_color(Color::dark_yellow);
-	//	win9I.attach(tring3);
-	//	
-	//	Triangle tring4(Point(600, 700), 100, 150, 135);
-	//	tring4.set_style(Line_style(Line_style::solid, 3));
-	//	tring4.set_fill_color(Color::dark_yellow);
-	//	win9I.attach(tring4);
+	center.x += 30;
+	center.y = 0;
+	}
 
 	win9I.wait_for_button();
 }
@@ -44,10 +35,96 @@ int main()
 /*
 
 //=======================================================================================================
-	14. Определите класс для прямоугольного треугольника.
-Составьте восьмиугольник из восьми прямоугольных треугольников разного цвета.
+	19. Определите класс Star. Одним из его параметров должно быть количество точек
+Нарисуйте несколько звездочек с разным количеством точек, разноцветными линиями и разными цветами заполнения.
 //=======================================================================================================
 
+//=======================================================================================================
+	18. Определите класс Poly, представляющий многоугольник, так, чтобы его конструктор проверял,
+действительно ли его точки образуют многоугольник. Подсказка: вы должны передавать в конструктор координаты точек.
+//=======================================================================================================
+
+//=======================================================================================================
+	V	17. Покройте окно узорами в виде маленьких разноцветных шестиугольников.
+//=======================================================================================================
+	int x_size = win9I.x_max();
+	int y_size = win9I.y_max();
+	win9I.wait_for_button();
+
+	Point center(0, 0);
+	Vector_ref<Regular_hexogon> rh;
+
+	for (int i = 0; i < x_size; ++i)
+	{
+		for (int j = 0; j < y_size; ++j)
+		{
+			rh.push_back(new Regular_hexogon(Point(center.x, center.y), 15, 6));
+			rh[rh.size() - 1].set_fill_color(Color(i * 1 + j));
+			rh[rh.size() - 1].set_style(Line_style(Line_style::solid, 2));
+			win9I.attach(rh[rh.size() - 1]);
+			center.y += 30;
+		}
+	center.x += 30;
+	center.y = 0;
+	}
+//=======================================================================================================
+	V	16. Покройте окно узорами в виде маленьких шестиугольников.
+//=======================================================================================================
+	int x_size = win9I.x_max();
+	int y_size = win9I.y_max();
+	win9I.wait_for_button();
+
+	Point center(0, 0);
+	Vector_ref<Regular_hexogon> rh;
+
+	for (int i = 0; i < x_size; ++i)
+	{
+		for (int j = 0; j < y_size; ++j)
+		{
+			rh.push_back(new Regular_hexogon(Point(center.x, center.y), 15, 6));
+			rh[rh.size() - 1].set_fill_color(Color(i * 1 + j));
+			rh[rh.size() - 1].set_style(Line_style(Line_style::solid, 2));
+			win9I.attach(rh[rh.size() - 1]);
+			center.y += 30;
+		}
+	center.x += 30;
+	center.y = 0;
+	}
+//=======================================================================================================
+	V	15. Покройте окно узорами в виде маленьких прямоугольных треугольников.
+//=======================================================================================================
+	int x_size = win9I.x_max();
+	int y_size = win9I.y_max();
+	win9I.wait_for_button();
+	Point center(0, 0);
+	Vector_ref<Triangle> tr;
+
+	for (int i = 0; i < x_size; ++i)
+	{
+		for (int j = 0; j < y_size; ++j)
+		{
+			tr.push_back(new Triangle(Point(center.x, center.y), 10, 15, 0));
+			tr[tr.size() - 1].set_fill_color(Color(i * 1 + j));
+			tr[tr.size() - 1].set_style(Line_style(Line_style::solid, 2));
+			win9I.attach(tr[tr.size() - 1]);
+			center.y += 15;
+		}
+	center.x += 10;
+	center.y = 0;
+	}
+//=======================================================================================================
+	V	14. Определите класс для прямоугольного треугольника.
+Составьте восьмиугольник из восьми прямоугольных треугольников разного цвета.
+//=======================================================================================================
+Vector_ref<Triangle> tr;
+
+for (int i = 0; i < 8; ++i)
+		{
+			tr.push_back(new Triangle(Point(500, 600), 100, 150, i * 45));
+			tr[tr.size() - 1].set_fill_color(Color(i * 16 + 1));
+			tr[tr.size() - 1].set_style(Line_style(Line_style::solid, 2));
+			win9I.attach(tr[tr.size() - 1]);
+		}
 //=======================================================================================================
 	V	13. Нарисуйте матрицу цвета из раздела 13.10, но без линий, окаймляющих каждый квадрат.
 //=======================================================================================================
