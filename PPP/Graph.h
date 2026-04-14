@@ -11,6 +11,7 @@
 #include <functional>
 #include <iostream>
 #include <cmath>
+#include <list>
 //=====================================================================================================
 constexpr double PI = 3.14159265358979323846;
 //=====================================================================================================
@@ -173,6 +174,11 @@ public:
 		return points.back();
 	}
 
+	Point point_front() const
+	{
+		return points.front();
+	}
+
 	virtual ~Shape() { }
 	/*
 	struct Window* attached;
@@ -283,8 +289,6 @@ inline std::pair<Point, Point> rotate_triangle(Point &o, const double &side_a, c
 	Point psa(o.x, o.y + side_b);
 	Point psb(o.x + side_a, o.y + side_b);
 
-
-
 	double dx = psa.x - o.x;	// direct vector
 	double dy = psa.y - o.y;
 	double dx2 = psb.x - o.x;
@@ -309,17 +313,7 @@ inline std::pair<Point, Point> rotate_triangle(Point &o, const double &side_a, c
 	Point rotate1(o.x + ux_l2 * dist_d, o.y + uy_l2 * dist_d);
 	Point rotate2(o.x + ux_l3 * dist_d2, o.y + uy_l3 * dist_d2);
 
-	if ((iter / 45) % 2 == 1)
-		return { rotate2, rotate1 };
-
 	return { rotate1, rotate2 };
-
-	//	double x = o.x + side_a * cos(angle);
-	//	double y = o.y + side_b * sin(angle);
-	//	
-	//	double x2 = o.x + side_a * cos(angle);
-	//	double y2 = o.y - side_b * sin(angle);
-
 }
 //=====================================================================================================
 struct Triangle : Shape
@@ -421,6 +415,17 @@ private:
 	int r;
 	int start;
 	int end;
+};
+//=====================================================================================================
+struct Poly : Shape
+{
+	Poly(const initializer_list<Point> &lst)
+		:Shape{ lst }
+	{
+		if (lst.size() <= 3) error("non-positive Polygonum");
+	}
+
+	void draw_lines() const;
 };
 //=====================================================================================================
 inline Point side(Point &p, const int &dd, int &iter)
